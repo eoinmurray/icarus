@@ -6,6 +6,9 @@ def auto(qd, pcm, laser, bench, spectrometer, constants):
 	
 		xlifetime, xxlifetime = qd.lifetimes()
 		poptime = np.random.exponential( constants.ptau - constants.xtau, size=1)[0]
+		if not constants.poptime:
+			poptime = 0
+
 		xtrue = np.random.random_sample() < qd.x_probability(laser.power)
 
 		if xtrue:
@@ -20,8 +23,10 @@ def auto(qd, pcm, laser, bench, spectrometer, constants):
 				time_2 = time + xlifetime + poptime
 				xlifetime, xxlifetime = qd.lifetimes()
 				poptime = np.random.exponential( constants.ptau - constants.xtau, size=1)[0]
+				if not constants.poptime:
+					poptime = 0
 			
-				xtrue = np.random.random_sample() < constants.secondary_emission_probability*qd.x_probability(laser.power**constants.secondary_emission_degree)
+				xtrue = np.random.random_sample() < qd.x_probability(laser.power*constants.secondary_emission_probability)
 				
 				if xtrue:
 					if np.random.random_sample() < 0.5:

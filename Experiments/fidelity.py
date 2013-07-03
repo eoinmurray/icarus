@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import constants as constants_imp
 from Experiments import Experiment
+import utils.save as save
 
 def fidelity(constants_rep = None, Visualizer = None):
 	
@@ -52,7 +53,9 @@ def fidelity(constants_rep = None, Visualizer = None):
 		elif i == 2:
 			name = 'circ'
 		
-		experiment.visualizer.plt.savefig('out/2013-07-01/' + name + ' fss-' + repr(constants.FSS/1e-6) + ' autog2-' + repr(constants.secondary_emission_probability) + '.png')
+		f = np.around(constants.FSS/1e-6, decimals=2)
+		g = np.around(constants.secondary_emission_probability, decimals=2)
+		save.savefig(experiment.visualizer.plt, name = name, dir = 'fss-' + repr(f) + ' autog2-' + repr(g))
 		experiment.visualizer.plt.close()
 
 	grect = hold_degrees_of_corrolation[0]
@@ -64,14 +67,14 @@ def fidelity(constants_rep = None, Visualizer = None):
 	return fidelity
 
 if __name__ == "__main__":
+	fidelity()
+	# fss = np.linspace(0, 1, num=5)*1e-6
+	# autog2 = np.linspace(0, 1, num=5)
 
-	fss = np.linspace(0, 1, num=5)*1e-6
-	autog2 = np.linspace(0, 1, num=5)
-
-	for f in fss:
-		for g in autog2:
-			print f/1e-6, g 
-			# constants_imp.FSS = f
-			# constants_imp.secondary_emission_probability = g	
-			# fidelity(constants_imp, Visualizer = False)
+	# for f in fss:
+	# 	for g in autog2:
+	# 		print f/1e-6, g 
+	# 		# constants_imp.FSS = f
+	# 		# constants_imp.secondary_emission_probability = g	
+	# 		# fidelity(constants_imp, Visualizer = False)
 

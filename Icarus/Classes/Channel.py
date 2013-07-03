@@ -4,7 +4,7 @@ try:
 except ImportError:
 	_histogram = np.histogram
 
-from EventEmitter import EventEmitter
+from utils.EventEmitter import EventEmitter
 
 class Channel(EventEmitter):
 	def __init__(self, bin_width, detector1, detector2, name):

@@ -3,13 +3,14 @@ import numpy as np
 # In real experiment integration time is 0.5e9ns, but detector yield is also much much lower.
 
 # Quantum dot
-xtau = 2.3
+xtau = 1.7
 xxtau = 0.9
-ptau = 3.5
+ptau = 2.5
+poptime = False
 FSS = 0.4e-6
 hbar = 6.58e-16
 secondary_emission = True
-secondary_emission_probability = 0.3
+secondary_emission_probability = 0.1
 secondary_emission_degree = 1
 
 # Laser
@@ -29,5 +30,5 @@ time_gating = False
 bin_width = 50
 
 # Experiment parameters
-num_iterations = 200
-integration_time = 1000
+num_iterations = 1000
+integration_time = 4000

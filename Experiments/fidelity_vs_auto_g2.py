@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from fidelity import fidelity
+import utils.save as save
 import constants as constants
 
 def fidelity_vs_auto_g2():
@@ -18,7 +19,9 @@ def fidelity_vs_auto_g2():
 	plt.plot(secondary_emission_probabilitys, hold_fidelity)
 	plt.xlabel('auto-g2, FSS: '+ repr(constants.FSS))
 	plt.ylabel('Fidelity')
-	plt.savefig('out/2013-07-01/' + 'fidelity_vs_g2_fss-' + repr(constants.FSS) + '.png')
+	f = np.around(constants.FSS/1e-6, decimals=2)
+	g = np.around(constants.secondary_emission_probability, decimals=2)
+	save.savefig(plt, name = 'fidelity_vs_g2', dir = 'fss-' + repr(f) + ' autog2-' + repr(g))
 
 if __name__ == "__main__":
 	
