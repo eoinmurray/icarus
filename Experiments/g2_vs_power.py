@@ -10,9 +10,7 @@ from Experiments import Experiment
 def smooth(array, points):
 	length = np.floor(array.size/points)
 	smoothed_array = np.zeros(length)
-	
 	i = 0
-
 	while i != length:
 		segment = array[i*points: (i+1)*points]
 		smoothed_array[i] = np.mean(segment)

@@ -9,14 +9,13 @@ ptau = 2.5
 poptime = False
 FSS = 0.4e-6
 hbar = 6.58e-16
-secondary_emission = True
-secondary_emission_probability = 0.1
+secondary_emission = False
+secondary_emission_probability = 0.2
 secondary_emission_degree = 1
 
 # Laser
 pulse_width = 25.
-mean_photon_number = 0.8
-power = mean_photon_number
+power = 0.3
 
 # Detector
 FWHM = 4.8
@@ -30,5 +29,5 @@ time_gating = False
 bin_width = 50
 
 # Experiment parameters
-num_iterations = 1000
+num_iterations = 500
 integration_time = 4000

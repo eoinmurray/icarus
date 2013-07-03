@@ -1,10 +1,12 @@
 import numpy as np
+import matplotlib.pyplot as plt 
+from utils.EventEmitter import EventEmitter
+
 try:
 	import utils._histogram as _histogram
 except ImportError:
 	_histogram = np.histogram
 
-from utils.EventEmitter import EventEmitter
 
 class Channel(EventEmitter):
 	def __init__(self, bin_width, detector1, detector2, name):
@@ -102,17 +104,14 @@ class Channel(EventEmitter):
 			self.counts = self.previous_counts
 
 	def plotPeaks(self, pulse_width):
-		import matplotlib.pyplot as plt 
 		x = self.bin_edges
 		y = self.counts
-
 		for j in xrange(int(x.max()/pulse_width)):
 			minIdx = np.abs(x - pulse_width*j).argmin()
 			maxIdx = np.abs(x - pulse_width*(j+1)).argmin()
 			peakX = x[minIdx: maxIdx]
 			peakY = y[minIdx:maxIdx]	
 			plt.plot(peakX, peakY)
-
 		plt.show()
 
 

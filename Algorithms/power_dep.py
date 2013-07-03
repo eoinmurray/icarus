@@ -14,5 +14,5 @@ def power_dep(qd, pcm, laser, bench, spectrometer, constants):
 		if xtrue:
 			spectrometer.hit('X')
 			
-			if np.random.random_sample() < constants.secondary_emission_probability*qd.x_probability(laser.power**constants.secondary_emission_degree):
+			if np.random.random_sample() < qd.x_probability(laser.power*constants.secondary_emission_probability):
 				spectrometer.hit('X')

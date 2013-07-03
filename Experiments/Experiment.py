@@ -70,7 +70,8 @@ class Experiment:
 			self.icarus.trigger('tick')
 		if self.Visualizer:
 			self.visualizer.plt.ioff()
-			self.visualizer.plt.show()
+			# self.visualizer.plt.show()
+			# self.visualizer.plt.close()
 
 
 	def plot(self):
