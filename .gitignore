@@ -2,4 +2,4 @@
 .DS_Store
 *.so
 build/
-out/
+out/*
