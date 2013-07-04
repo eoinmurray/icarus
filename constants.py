@@ -16,7 +16,7 @@ class Constants():
 
 	# Laser
 	pulse_width = 25.
-	power = 0.5
+	power = 0.1
 
 	# Detector
 	FWHM = 4.8
@@ -24,9 +24,6 @@ class Constants():
 	sigma = 0
 	efficiency = 1
 	delay = 161.8
-	# gate_start = 0.5
-	# gate_width = 1
-	# time_gating = False
 	bin_width = 50
 
 	# Experiment parameters

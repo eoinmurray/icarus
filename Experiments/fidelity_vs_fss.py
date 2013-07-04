@@ -12,7 +12,7 @@ def fidelity_vs_fss():
 	fss = fss*1e-6
 
 	pool = Pool(processes=4)  
-	hold_fidelity = pool.map(fidelity_single_process, fss)
+	hold_fidelity = pool.map(fidelity_single_process, fss) 
 
 	plt.plot(fss/1e-6, hold_fidelity)
 	save.savefig(plt, name="fss_v_fidelity")

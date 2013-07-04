@@ -46,7 +46,7 @@ class QuantumDot:
 		if self.temp_hold_xlifetime == self.xlifetime:
 			print '[Warning] Using the same lifetime twice in a row to generate the state phase, are you sure this is correct? '
 			print 'Normally you should generate a new lifetime each iteration of the experiment.'
-		phase = np.exp((1.0j*self.FSS*self.xlifetime*1E-9)/hbar)
+		phase = np.exp((1.0j*self.FSS*self.xlifetime*1e-9)/hbar)
 		self.temp_hold_xlifetime = self.xlifetime
 		self.phase = phase
 		return phase

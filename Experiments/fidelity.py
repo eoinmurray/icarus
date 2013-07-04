@@ -9,6 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import constants as Constants
 from run_basis import run_basis
+import utils.save as save
 
 def ideal_fidelity_lorentzian(s, tau, h):
 	return 0.5*(1 + 1/(1 + ((s**2)*((tau*1e-9)**2))/(h**2)))
@@ -18,7 +19,7 @@ def fidelity_single_process(fss):
 	constants.FSS = fss
 	print 'Starting fidelity measurement with fss: ', fss/1e-6, ' ueV'
 	expected_fidelity = ideal_fidelity_lorentzian(constants.FSS, constants.xtau, constants.hbar)
-	print 'Expecting fidelity of ', expected_fidelity, ' ueV'
+	print 'Expecting fidelity of ', expected_fidelity
 	
 	HWPAngles = np.array([0, np.pi/8, None])
 	QWPAngles = np.array([None, None, np.pi/4])
@@ -48,13 +49,22 @@ def fidelity_multi_process(fss):
 	
 	HWPAngles = np.array([0, np.pi/8, None])
 	QWPAngles = np.array([None, None, np.pi/4])
+	names = ['linear', 'diag', 'circ']
 	angles = np.vstack((HWPAngles, QWPAngles)).T
 	hold_degrees_of_corrolation = []
 	constants.FSS = fss
+	
 	print 'Degrees of corrolation.'
 	pool = Pool(processes=4)  
-
 	hold_degrees_of_corrolation = pool.map(functools.partial(run_basis, constants=constants), angles) 
+
+	
+	f = np.around(constants.FSS/1e-6, decimals=2)
+	g = np.around(constants.secondary_emission_probability, decimals=2)
+	dirname = 'fss-' + repr(f) + ' autog2-' + repr(g)	
+	for name in names:	
+		plt = save.plotdata(name = name, dir = dirname)
+		save.savefig(plt, name = name, dir = dirname)
 
 	grect = hold_degrees_of_corrolation[0]
 	gdiag = hold_degrees_of_corrolation[1]
@@ -69,3 +79,5 @@ def fidelity_multi_process(fss):
 if __name__ == "__main__":
 	constants = Constants.Constants()	
 	fidelity_multi_process(constants.FSS)
+
+

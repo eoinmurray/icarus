@@ -8,8 +8,6 @@ def basis(qd, pcm, laser, bench, spectrometer, constants):
 		poptime = np.random.exponential( constants.ptau - constants.xtau, size=1)[0]
 		if not constants.poptime:
 			poptime = 0
-
-		
 		
 		state = qd.generate_state()
 		propogated_state = bench.matrix*state
