@@ -9,12 +9,20 @@ import constants as constants
 from Experiments import Experiment
 import utils.save as save
 
+def ideal_fidelity_lorentzian(s, tau, h):
+	return 0.5*(1 + 1/(1 + ((s**2)*((tau*1e-9)**2))/(h**2)))
+
 def fidelity(fss):
+	print 'Starting fidelity measurement with fss: ', fss/1e-6, ' ueV'
+	expected_fidelity = ideal_fidelity_lorentzian(constants.FSS, constants.xtau, constants.hbar)
+	print 'Expecting fidelity of ', expected_fidelity, ' ueV'
 	constants.FSS = fss
 
 	HWPAngles = np.array([0, np.pi/8, None])
 	QWPAngles = np.array([None, None, np.pi/4])
 	hold_degrees_of_corrolation = []
+
+	print 'Degrees of corrolation.'
 
 	for i in xrange(HWPAngles.size):
 		experiment = Experiment(constants, Visualizer = False)
@@ -39,7 +47,7 @@ def fidelity(fss):
 		degree_of_corrolation = (g2 - g2_cross)/(g2 + g2_cross)
 
 		hold_degrees_of_corrolation.append(degree_of_corrolation)
-		print degree_of_corrolation
+
 
 		name = 'linear'
 		if i == 1:
@@ -50,7 +58,7 @@ def fidelity(fss):
 		f = np.around(constants.FSS/1e-6, decimals=2)
 		g = np.around(constants.secondary_emission_probability, decimals=2)
 
-		
+		print '	', name, ': ', degree_of_corrolation		
 		for key in experiment.pcm._channels:
 			x = experiment.pcm._channels[key].bin_edges
 			y = experiment.pcm._channels[key].counts
@@ -61,6 +69,9 @@ def fidelity(fss):
 	gcirc = hold_degrees_of_corrolation[2]
 
 	fidelity = (1 + grect + gdiag - gcirc)/4
+
+	print 'fidelity: ', fidelity
+	print 'real/expected: ', (fidelity/expected_fidelity)*100
 
 	return fidelity
 

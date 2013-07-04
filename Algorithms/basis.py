@@ -6,6 +6,10 @@ def basis(qd, pcm, laser, bench, spectrometer, constants):
 		xxtrue, xtrue = qd.emission(laser.power) # xxtrue is a biexciton photon, ie one photon not two, if xx is true x will also be true.
 		xlifetime, xxlifetime = qd.lifetimes()
 		poptime = np.random.exponential( constants.ptau - constants.xtau, size=1)[0]
+		if not constants.poptime:
+			poptime = 0
+
+		
 		
 		state = qd.generate_state()
 		propogated_state = bench.matrix*state
