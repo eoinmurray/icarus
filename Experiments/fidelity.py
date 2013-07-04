@@ -45,7 +45,7 @@ def fidelity_multi_process(fss):
 
 	print 'Starting fidelity measurement with fss: ', fss/1e-6, ' ueV'
 	expected_fidelity = ideal_fidelity_lorentzian(constants.FSS, constants.xtau, constants.hbar)
-	print 'Expecting fidelity of ', expected_fidelity, ' ueV'
+	print 'Expecting fidelity of ', expected_fidelity
 	
 	HWPAngles = np.array([0, np.pi/8, None])
 	QWPAngles = np.array([None, None, np.pi/4])
@@ -56,8 +56,7 @@ def fidelity_multi_process(fss):
 	
 	print 'Degrees of corrolation.'
 	pool = Pool(processes=4)  
-	hold_degrees_of_corrolation = pool.map(functools.partial(run_basis, constants=constants), angles) 
-
+	hold_degrees_of_corrolation = pool.map(functools.partial(run_basis, constants=constants), angles)
 	
 	f = np.around(constants.FSS/1e-6, decimals=2)
 	g = np.around(constants.secondary_emission_probability, decimals=2)
@@ -72,12 +71,10 @@ def fidelity_multi_process(fss):
 	fidelity = (1 + grect + gdiag - gcirc)/4
 
 	print 'fidelity: ', fidelity
-	print 'real/expected: ', (fidelity/expected_fidelity)*100
+	print 'real/expected: ', (fidelity/expected_fidelity)*100, '%'
 	return fidelity
-
 
 if __name__ == "__main__":
 	constants = Constants.Constants()	
 	fidelity_multi_process(constants.FSS)
-
 

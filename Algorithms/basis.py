@@ -3,10 +3,12 @@ def basis(qd, pcm, laser, bench, spectrometer, constants):
 
 	for time in laser.pulseTimes(constants.integration_time):
 
-		xxtrue, xtrue = qd.emission(laser.power) # xxtrue is a biexciton photon, ie one photon not two, if xx is true x will also be true.
+		# xxtrue is a biexciton photon, ie one photon not two, if xx is true x will also be true.
+		xxtrue, xtrue = qd.emission(laser.power) 
 		xlifetime, xxlifetime = qd.lifetimes()
-		poptime = np.random.exponential( constants.ptau - constants.xtau, size=1)[0]
-		if not constants.poptime:
+		poptime = qd.poptime()
+		
+		if not constants.poptime_on:
 			poptime = 0
 		
 		state = qd.generate_state()
@@ -17,32 +19,36 @@ def basis(qd, pcm, laser, bench, spectrometer, constants):
 		D2D3_prob = pcm.channel('D2D3').calculate_probability(propogated_state)
 		D2D4_prob = pcm.channel('D2D4').calculate_probability(propogated_state)
 
+		prob = np.array([D1D3_prob, D1D4_prob, D2D3_prob, D2D4_prob])
 		rand = np.random.random_sample()
 
+		boole = (prob.cumsum() > rand)
+		first_match = np.where(boole ==True)[0][0] 
+
 		if xxtrue:
-			if (0 < rand < D1D3_prob):
+			if first_match == 0:
 				pcm.detector('D3').hit(time, xxlifetime + poptime)
 
-			elif (D1D3_prob < rand < D1D3_prob + D1D4_prob):
+			if first_match == 1:
 				pcm.detector('D4').hit(time, xxlifetime + poptime)
 
-			elif (D1D3_prob + D1D4_prob < rand < D1D3_prob + D1D4_prob + D2D3_prob):
+			if first_match == 2:
 				pcm.detector('D3').hit(time, xxlifetime + poptime)
 
-			if (D1D3_prob + D1D4_prob + D2D3_prob < rand < D1D3_prob + D1D4_prob + D2D3_prob + D2D4_prob):
+			if first_match == 3:
 				pcm.detector('D4').hit(time, xxlifetime + poptime)	
 
 		if xtrue:
-			if (0 < rand < D1D3_prob):
+			if first_match == 0:
 				pcm.detector('D1').hit(time, xlifetime + poptime)
 
-			if (D1D3_prob < rand < D1D3_prob + D1D4_prob):
+			if first_match == 1:
 				pcm.detector('D1').hit(time, xlifetime + poptime)
 
-			if (D1D3_prob + D1D4_prob < rand < D1D3_prob + D1D4_prob + D2D3_prob):
+			if first_match == 2:
 				pcm.detector('D2').hit(time, xlifetime + poptime)
 
-			if (D1D3_prob + D1D4_prob + D2D3_prob < rand < D1D3_prob + D1D4_prob + D2D3_prob + D2D4_prob):
+			if first_match == 3:
 				pcm.detector('D2').hit(time, xlifetime + poptime)
 
 			if constants.secondary_emission:

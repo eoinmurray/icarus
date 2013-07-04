@@ -12,7 +12,13 @@ class Experiment:
 		self.constants = constants
 		self.icarus = Icarus()
 
-		self.qd = self.icarus.QuantumDot( xlifetime  = self.constants.xtau, xxlifetime = self.constants.xxtau, FSS = self.constants.FSS)
+		self.qd = self.icarus.QuantumDot( 
+			xlifetime  = self.constants.xtau, 
+			xxlifetime = self.constants.xxtau, 
+			ptau = self.constants.ptau, 
+			FSS = self.constants.FSS
+		)
+
 		self.spectrometer = self.icarus.Spectrometer()
 
 		self.bench = self.icarus.OpticalBench()
@@ -21,20 +27,86 @@ class Experiment:
 		self.bench.setLabMatrix('NBSNBS HWPHWP SS PBSPBS')
 
 		self.pcm = self.icarus.PhotonCountingModule()
-		self.pcm.register_detector('D1',  self.pcm.Detector(delay = self.constants.delay, 	efficiency	= self.constants.efficiency, sigma	= self.constants.sigma, matrix = self.bench.jxh ))
-		self.pcm.register_detector('D2',  self.pcm.Detector(delay = self.constants.delay, 	efficiency	= self.constants.efficiency, sigma	= self.constants.sigma, matrix = self.bench.ixv ))
-		self.pcm.register_detector('D3',  self.pcm.Detector(delay = 0, 	efficiency	= self.constants.efficiency, sigma	= self.constants.sigma, matrix = self.bench.ixxh ))
-		self.pcm.register_detector('D4',  self.pcm.Detector(delay = 0, 	efficiency	= self.constants.efficiency, sigma	= self.constants.sigma, matrix = self.bench.jxxv ))
 		
-		self.pcm.register_channel('D1D3', self.pcm.Channel(constants.bin_width, self.pcm.detector('D3'), self.pcm.detector('D1'), 'D1D3'))
-		self.pcm.register_channel('D1D4', self.pcm.Channel(constants.bin_width, self.pcm.detector('D4'), self.pcm.detector('D1'), 'D1D4'))
-		self.pcm.register_channel('D2D3', self.pcm.Channel(constants.bin_width, self.pcm.detector('D3'), self.pcm.detector('D2'), 'D2D3'))
-		self.pcm.register_channel('D2D4', self.pcm.Channel(constants.bin_width, self.pcm.detector('D4'), self.pcm.detector('D2'), 'D2D4'))
+		self.pcm.register_detector('D1',  
+			self.pcm.Detector(
+				delay = self.constants.delay, 	
+				efficiency	= self.constants.efficiency, 
+				sigma	= self.constants.sigma, 
+				matrix = self.bench.jxh 
+				)
+			)
+
+		self.pcm.register_detector('D2',  
+			self.pcm.Detector(
+				delay = self.constants.delay, 	
+				efficiency	= self.constants.efficiency, 
+				sigma	= self.constants.sigma, 
+				matrix = self.bench.ixv 
+				)
+			)
+
+		self.pcm.register_detector('D3',  
+			self.pcm.Detector(
+				delay = 0, 	
+				efficiency	= self.constants.efficiency, 
+				sigma	= self.constants.sigma, 
+				matrix = self.bench.ixxh 
+				)
+			)
 		
-		self.laser = self.bench.Laser(pulse_width = self.constants.pulse_width, power = self.constants.power)
+		self.pcm.register_detector('D4',  
+			self.pcm.Detector(
+				delay = 0, 	
+				efficiency	= self.constants.efficiency, 
+				sigma	= self.constants.sigma, 
+				matrix = self.bench.jxxv 
+				)
+			)
+		
+		self.pcm.register_channel('D1D3',
+			self.pcm.Channel(
+				constants.bin_width, 
+				self.pcm.detector('D3'), 
+				self.pcm.detector('D1'), 
+				'D1D3'
+				)
+			)
+		
+		self.pcm.register_channel('D1D4',
+			self.pcm.Channel(
+				constants.bin_width, 
+				self.pcm.detector('D4'), 
+				self.pcm.detector('D1'), 
+				'D1D4'
+				)
+			)
+		
+		self.pcm.register_channel('D2D3',
+			self.pcm.Channel(
+				constants.bin_width, 
+				self.pcm.detector('D3'), 
+				self.pcm.detector('D2'), 
+				'D2D3'
+				)
+			)
+		
+		self.pcm.register_channel('D2D4',
+			self.pcm.Channel(
+				constants.bin_width, 
+				self.pcm.detector('D4'), 
+				self.pcm.detector('D2'), 
+				'D2D4'
+				)
+			)
+		
+
+		self.laser = self.bench.Laser(
+			pulse_width = self.constants.pulse_width, 
+			power = self.constants.power
+			)
 
 		self.Visualizer = Visualizer
-		
 		if Visualizer:
 			self.visualizer = self.icarus.Visualizer()
 			self.visualizer.add(self.pcm.channel('D1D3'), 221)

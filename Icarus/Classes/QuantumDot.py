@@ -1,10 +1,11 @@
 import numpy as np
 
 class QuantumDot:
-	def __init__(self, xlifetime=None, xxlifetime=None, FSS=None):
+	def __init__(self, xlifetime=None, xxlifetime=None, ptau = None, FSS=None):
 		self.initializeMatrices()
 		self.xtau = xlifetime
 		self.xxtau = xxlifetime
+		self.ptau = ptau
 		
 		self.FSS = FSS
 
@@ -41,15 +42,16 @@ class QuantumDot:
 		self.xxlifetime = xxlifetime
 		return xlifetime, xxlifetime
 
+	def poptime(self):
+		return np.random.exponential( self.ptau - self.xtau, size=1)[0]
+
 	def generate_phase(self):
 		hbar = 6.56e-16
-		if self.temp_hold_xlifetime == self.xlifetime:
-			print '[Warning] Using the same lifetime twice in a row to generate the state phase, are you sure this is correct? '
-			print 'Normally you should generate a new lifetime each iteration of the experiment.'
-		phase = np.exp((1.0j*self.FSS*self.xlifetime*1e-9)/hbar)
-		self.temp_hold_xlifetime = self.xlifetime
-		self.phase = phase
-		return phase
+		self.phase = self._generate_phase(self.FSS, self.xlifetime, hbar)
+		return self.phase
+
+	def _generate_phase(self, FSS, xlifetime, hbar):
+		return np.exp((1.0j*FSS*xlifetime*1e-9)/hbar)
 
 	def generate_state(self):
 		self.generate_phase()
