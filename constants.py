@@ -1,9 +1,9 @@
-import numpy as np
-# All times in nanoseconds
-# In real experiment integration time is 0.5e9ns, but detector yield is also much much lower.
 
-# Quantum dot
+
+import numpy as np
+
 class Constants():
+	# Quantum dot
 	xtau = 1
 	xxtau = 0.5
 	ptau = 2
