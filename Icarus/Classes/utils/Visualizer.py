@@ -29,7 +29,7 @@ class Visualizer:
 
 	def plot(self, channel, pos):
 		self._channels[channel.name] = channel
-		ax = self.fig.add_subplot(pos, xlim=(0,300), ylim=(0,10))
+		ax = self.fig.add_subplot(pos, xlim=(0,300))
 		ax.set_xlabel(channel.name)
 		ax.plot(channel.bin_edges, channel.counts, 'r-')
-		ax.set_ylim([0, np.max(channel.counts) + 5])
+		# ax.set_ylim([0, np.max(channel.counts) + 5])

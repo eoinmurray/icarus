@@ -1,3 +1,4 @@
+import time
 import os,sys
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0,parentdir)
@@ -49,7 +50,6 @@ class Experiment:
 	def run(self, name):
 
 		for interation in xrange(self.constants.num_iterations):
-			print self.constants.num_iterations - interation
 			self.pcm.detector('D1').reset()
 			self.pcm.detector('D2').reset()
 			self.pcm.detector('D3').reset()
@@ -70,9 +70,6 @@ class Experiment:
 			self.icarus.trigger('tick')
 		if self.Visualizer:
 			self.visualizer.plt.ioff()
-			# self.visualizer.plt.show()
-			# self.visualizer.plt.close()
-
 
 	def plot(self):
 		if not self.Visualizer:

@@ -2,27 +2,22 @@ import os,sys
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0,parentdir)
 
+import time
 import numpy as np
 import matplotlib.pyplot as plt
-import constants as constants_imp
+import constants as constants
 from Experiments import Experiment
 import utils.save as save
 
-def fidelity(constants_rep = None, Visualizer = None):
-	
-	if constants_rep:
-		constants = constants_rep
-	else:
-		constants = constants_imp
+def fidelity(fss):
+	constants.FSS = fss
 
 	HWPAngles = np.array([0, np.pi/8, None])
 	QWPAngles = np.array([None, None, np.pi/4])
 	hold_degrees_of_corrolation = []
 
 	for i in xrange(HWPAngles.size):
-	
-		print 'i', i
-		experiment = Experiment(constants, Visualizer = Visualizer)
+		experiment = Experiment(constants, Visualizer = False)
 		
 		if HWPAngles[i] is not None:
 			experiment.bench.setHWP(HWPAngles[i], HWPAngles[i])
@@ -30,7 +25,7 @@ def fidelity(constants_rep = None, Visualizer = None):
 		elif QWPAngles[i] is not None:
 			experiment.bench.setQWP(QWPAngles[i], QWPAngles[i])
 			experiment.bench.setLabMatrix('NBSNBS QWPQWP SS PBSPBS')
-			
+		
 		experiment.run('basis')
 
 		experiment.pcm.channel('D1D3').normalize(experiment.laser.pulse_width)
@@ -46,7 +41,6 @@ def fidelity(constants_rep = None, Visualizer = None):
 		hold_degrees_of_corrolation.append(degree_of_corrolation)
 		print degree_of_corrolation
 
-		experiment.plot()
 		name = 'linear'
 		if i == 1:
 			name = 'diag'
@@ -55,8 +49,12 @@ def fidelity(constants_rep = None, Visualizer = None):
 		
 		f = np.around(constants.FSS/1e-6, decimals=2)
 		g = np.around(constants.secondary_emission_probability, decimals=2)
-		save.savefig(experiment.visualizer.plt, name = name, dir = 'fss-' + repr(f) + ' autog2-' + repr(g))
-		experiment.visualizer.plt.close()
+
+		
+		for key in experiment.pcm._channels:
+			x = experiment.pcm._channels[key].bin_edges
+			y = experiment.pcm._channels[key].counts
+			save.savedata(x, y, name = name + ' ' + key, dir = 'fss-' + repr(f) + ' autog2-' + repr(g))
 
 	grect = hold_degrees_of_corrolation[0]
 	gdiag = hold_degrees_of_corrolation[1]
@@ -66,15 +64,22 @@ def fidelity(constants_rep = None, Visualizer = None):
 
 	return fidelity
 
-if __name__ == "__main__":
-	fidelity()
-	# fss = np.linspace(0, 1, num=5)*1e-6
-	# autog2 = np.linspace(0, 1, num=5)
 
-	# for f in fss:
-	# 	for g in autog2:
-	# 		print f/1e-6, g 
-	# 		# constants_imp.FSS = f
-	# 		# constants_imp.secondary_emission_probability = g	
-	# 		# fidelity(constants_imp, Visualizer = False)
+def average_fidelities():
+	hold_f = []
+	for i in xrange(10):
+		t0 = time.time()
+		f = fidelity(constants.FSS)
+		t1 = time.time()
+		total = t1-t0
+		print 'time for fidelity run:', total
+		print 'fidelity: ', f
+		hold_f.append(f)
+
+	print 'Average of fidelity run:', np.array(hold_f).mean()
+
+
+if __name__ == "__main__":
+	fidelity(constants.FSS)
+
 

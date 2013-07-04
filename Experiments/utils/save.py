@@ -47,4 +47,4 @@ def savedata(x, y, name = None, dir = None):
 		
 		filename = directory + '/' + dir + '/' + name + '.txt'
 	
-	np.savetxt(directory + '/' + name + '.txt', data, delimiter = ',')
+	np.savetxt(filename, data, delimiter = ',')
