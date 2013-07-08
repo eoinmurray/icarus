@@ -2,12 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt 
 from utils.EventEmitter import EventEmitter
 
-try:
-	import utils._histogram as _histogram
-except ImportError:
-	_histogram = np.histogram
-
-
 class Channel(EventEmitter):
 	def __init__(self, bin_width, detector1, detector2, name):
 		self.bin_width = bin_width
@@ -71,7 +65,7 @@ class Channel(EventEmitter):
 		for stop in _stops:
 			diff = stop - _starts
 			diff = diff[(diff > bins.min()) & (diff < bins.max())]
-			counts = counts + _histogram(diff, bins)[0]
+			counts = counts + np.histogram(diff, bins)[0]
 		return counts
 
 	def normalize(self, pulse_width):
