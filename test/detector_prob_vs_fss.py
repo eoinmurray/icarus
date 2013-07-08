@@ -27,7 +27,7 @@ def test():
 	constants = Constants()
 
 	size = 5000
-	xtau = 1.
+	xtau = np.random.exponential(1, 1)[0]
 	FSS = np.linspace(0, 4, num=100)*1e-6
 	hbar = 6.56e-16
 
@@ -54,6 +54,16 @@ def test():
 			matrix = bench.ixxh 
 		)
 	)
+
+	pcm.register_detector('D2',  
+		pcm.Detector(
+			delay = constants.delay, 	
+			efficiency	= constants.efficiency, 
+			sigma	= constants.sigma, 
+			matrix = bench.ixv 
+		)
+	)
+	
 	pcm.register_channel('D1D3', 
 		pcm.Channel(
 			constants.bin_width, 
@@ -63,12 +73,24 @@ def test():
 		)
 	)
 
-	channel = pcm.channel('D1D3')
+	pcm.register_channel('D2D3', 
+		pcm.Channel(
+			constants.bin_width, 
+			pcm.detector('D3'), 
+			pcm.detector('D2'), 
+			'D2D3'
+		)
+	)
+
+	channel1 = pcm.channel('D1D3')
+	channel2 = pcm.channel('D2D3')
 	
 	states = [state(qd, bench, xtau, f) for f in FSS]
-	D1D3_probs = np.array([channel.calculate_probability(i) for i in states])
+	D1D3_probs = np.array([channel1.calculate_probability(i) for i in states])
+	D2D3_probs = np.array([channel2.calculate_probability(i) for i in states])
 	
 	plt.plot(FSS/1e-6, D1D3_probs, 'go')
+	plt.plot(FSS/1e-6, D2D3_probs, 'bo')
 	plt.show()
 
 if __name__ == "__main__":

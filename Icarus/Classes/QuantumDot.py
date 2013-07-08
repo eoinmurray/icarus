@@ -35,11 +35,13 @@ class QuantumDot:
 		self.jxxv = np.kron(self.xx, np.kron(self.j, self.v))
 
 	def lifetimes(self):
-		xlifetime = 1
-		xxlifetime = 10
-		while xlifetime < xxlifetime:
-			xlifetime = np.random.exponential( self.xtau, 1)[0]
+		xlifetime = np.random.exponential( self.xtau, 1)[0]
+		xxlifetime = np.random.exponential( self.xxtau, 1)[0]
+	
+		while xxlifetime > xlifetime:
 			xxlifetime = np.random.exponential( self.xxtau, 1)[0]
+			# xxlifetime = np.random.exponential( self.xxtau, 1)[0]
+	
 		self.xlifetime = xlifetime
 		self.xxlifetime = xxlifetime
 		return xlifetime, xxlifetime

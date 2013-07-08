@@ -6,6 +6,7 @@ sys.path.insert(0,parentdir)
 
 import numpy as np
 from Experiments import Experiment
+from constants import Constants
 import utils.save as save
 
 def run_basis(angles, constants):
@@ -44,5 +45,26 @@ def run_basis(angles, constants):
 	g2_cross = experiment.pcm.channel('D2D3').g2
 	
 	degree_of_corrolation = (g2 - g2_cross)/(g2 + g2_cross)
-	print '	', name, ': ', degree_of_corrolation		
 	return degree_of_corrolation
+
+
+def plotres(name, constants):
+	f = np.around(constants.FSS/1e-6, decimals=2)	
+	plt=save.plotdata(
+		name=name, 
+		dir='fss-'+repr(f)+' xtau-'+repr(constants.xtau)
+	)
+
+	plt.show()
+
+
+if __name__ == "__main__":
+	constants = Constants()
+	angles = [np.pi/8, None]
+	name = 'diag'
+
+	print name, 'degree of corrolation.'
+	degree_of_corrolation = run_basis(angles, constants)
+	print degree_of_corrolation
+
+	plotres(name, constants)

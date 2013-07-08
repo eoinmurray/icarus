@@ -1,3 +1,5 @@
+
+
 import os,sys
 import datetime
 import numpy as np 
@@ -65,25 +67,39 @@ def plotdata(name, dir):
 
 	ymax = np.array([y1, y2, y3, y4]).max() + 2
 
+	plt.suptitle(name)
+
 	plt.subplot(221)
 	plt.plot(x, y1) 
 	plt.xlim([0,300]) 
-	plt.ylim([0, ymax])
+	plt.ylim([0, ymax + 2])
+	plt.ylabel('Counts')
+	plt.xlabel('Time (ns)')
+	plt.annotate('D1D3', xy=(0, 1), xytext=(12, -12), va='top', xycoords='axes fraction', textcoords='offset points')
 
 	plt.subplot(222)
 	plt.plot(x, y2)
 	plt.xlim([0,300]) 
-	plt.ylim([0, ymax])	
+	plt.ylim([0, ymax + 2])	
+	plt.ylabel('Counts')
+	plt.xlabel('Time (ns)')
+	plt.annotate('D1D4', xy=(0, 1), xytext=(12, -12), va='top', xycoords='axes fraction', textcoords='offset points')	
 
 	plt.subplot(223)
 	plt.plot(x, y3)
 	plt.xlim([0,300]) 
-	plt.ylim([0, ymax])
-	
+	plt.ylim([0, ymax + 2])
+	plt.ylabel('Counts')
+	plt.xlabel('Time (ns)')
+	plt.annotate('D2D3', xy=(0, 1), xytext=(12, -12), va='top', xycoords='axes fraction', textcoords='offset points')
+
 	plt.subplot(224)
 	plt.plot(x, y4)
 	plt.xlim([0,300]) 
-	plt.ylim([0, ymax])
-	plt.xlabel(name)
+	plt.ylim([0, ymax + 2])
+	plt.ylabel('Counts')
+	plt.xlabel('Time (ns)')
+	plt.annotate('D2D4', xy=(0, 1), xytext=(12, -12), va='top', xycoords='axes fraction', textcoords='offset points')	
+	
 	return plt
 
