@@ -5,12 +5,13 @@ sys.path.insert(0,parentdir)
 from scipy import integrate, interpolate, optimize
 import numpy as np
 import matplotlib.pyplot as plt
-import constants as constants
+from constants import Constants
 from Experiment import Experiment
 
 if __name__ == "__main__":
-			
-	hold_power = np.linspace(0.5, 1, num=60)
+	constants = Constants()
+
+	hold_power = np.linspace(0.2, 0.8, num=60)
 	hold_x = []
 	hold_xx = []
 	
@@ -33,7 +34,9 @@ if __name__ == "__main__":
 
 	print mx, mxx
 	hold_power_interpolate = np.linspace(np.min(hold_power[0:idx]), np.max(hold_power[0:idx]), num=200)
-	plt.plot(np.log10(hold_power_interpolate), mx*np.log10(hold_power_interpolate) + cx, 'r-')
-	plt.plot(np.log10(hold_power_interpolate), mxx*np.log10(hold_power_interpolate) + cxx, 'b-')
+	
+	plt.plot(np.log10(hold_power_interpolate), mx*np.log10(hold_power_interpolate) + cx, 'g--')
+	plt.plot(np.log10(hold_power_interpolate), mxx*np.log10(hold_power_interpolate) + cxx, 'g--')
+	
 	plt.legend(['X', 'XX'])
 	plt.show()

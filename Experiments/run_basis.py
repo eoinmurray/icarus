@@ -13,14 +13,23 @@ def run_basis(angles, constants):
 
 	experiment = Experiment(constants)
 	
-	HWPAngle, QWPAngle = angles
+	if len(angles) == 2:
+		HWPAngle, QWPAngle = angles
+		HWPAngle2 = HWPAngle
+		QWPAngle2 = QWPAngle
+	else:
+		HWPAngle, QWPAngle, HWPAngle2, QWPAngle2 = angles
+
 	if HWPAngle is not None:
-		experiment.bench.setHWP(HWPAngle, HWPAngle)
+		experiment.bench.setHWP(HWPAngle, HWPAngle2)
 		experiment.bench.setLabMatrix('NBSNBS HWPHWP SS PBSPBS')
 	elif QWPAngle is not None:
-		experiment.bench.setQWP(QWPAngle, QWPAngle)
+		experiment.bench.setQWP(QWPAngle, QWPAngle2)
 		experiment.bench.setLabMatrix('NBSNBS QWPQWP SS PBSPBS')
 	
+	if len(angles) == 4:
+		experiment.bench.setLabMatrix('NBSNBS QWPQWP HWPHWP SS PBSPBS')
+
 	experiment.run('basis')
 	
 	f = np.around(constants.FSS/1e-6, decimals=2)
@@ -43,8 +52,8 @@ def run_basis(angles, constants):
 
 	g2 = experiment.pcm.channel('D1D3').g2
 	g2_cross = experiment.pcm.channel('D2D3').g2
-	
 	degree_of_corrolation = (g2 - g2_cross)/(g2 + g2_cross)
+
 	return degree_of_corrolation
 
 

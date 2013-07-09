@@ -4,6 +4,7 @@ import os,sys
 import datetime
 import numpy as np 
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 today = datetime.datetime.now().strftime("%Y-%m-%d")
 directory = os.path.dirname("out/" + today + '/')
@@ -33,8 +34,6 @@ def savefig(plt, name = None, dir = None):
 		filename = directory + '/' + dir + '/' + name + '.png'
 
 	plt.savefig(filename)
-	plt.close('all')
-
 
 def savedata(x, y, name = None, dir = None):
 	if not name:
@@ -103,3 +102,37 @@ def plotdata(name, dir):
 	
 	return plt
 
+def plot_matrix(matrix, title):
+	
+	data = np.squeeze(np.asarray(matrix))
+	
+	column_names = ['HH', 'HV', 'VH', 'VV']
+	row_names = ['HH', 'HV', 'VH', 'VV']
+
+	fig = plt.figure()
+	ax = Axes3D(fig)
+
+	lx= len(data[0])            # Work out matrix dimensions
+	ly= len(data[:,0])
+
+	xpos = np.arange(0,lx,1)    # Set up a mesh of positions
+	ypos = np.arange(0,ly,1)
+	xpos, ypos = np.meshgrid(xpos + 0.25, ypos + 0.25)
+
+	xpos = xpos.flatten()   # Convert positions to 1D array
+	ypos = ypos.flatten()
+	zpos = np.zeros(lx*ly)
+
+	dx = 0.5 * np.ones_like(zpos)
+	dy = dx.copy()
+	dz = data.flatten()
+
+	ax.bar3d(xpos,ypos,zpos, dx, dy, dz, color='b')
+	
+	ax.w_xaxis.set_ticks([0.5, 1.5, 2.5, 3.5])
+	ax.w_yaxis.set_ticks([0.5, 1.5, 2.5, 3.5])
+	ax.w_xaxis.set_ticklabels(column_names)
+	ax.w_yaxis.set_ticklabels(row_names)
+	
+	plt.suptitle(title)
+	return plt

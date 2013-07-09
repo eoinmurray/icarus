@@ -1,3 +1,5 @@
+
+
 import numpy as np
 from Laser import Laser
 
@@ -29,7 +31,6 @@ class OpticalBench:
 
 	def setLabMatrix(self, element_names):
 		element_names = element_names.split(' ')
-		# element_names = element_names[::-1]
 
 		isSet = False
 		for element_name in element_names:

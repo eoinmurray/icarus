@@ -17,11 +17,11 @@ def ideal_fidelity_lorentzian(fss, xlifetime, h):
 	"""Returns ideal fidelty, from AH thesis."""
 	return 0.5*(1 + 1/(1 + ((fss**2)*((xlifetime*1e-9)**2))/(h**2)))
 
-def fidelity(fss = None, constants_pass = None):
+def fidelity(power = None, constants_pass = None):
 	constants = Constants()
 
-	if fss:
-		constants.FSS = fss
+	if power:
+		constants.power = power
 	if constants_pass:
 		constants = constants_pass
 
@@ -37,8 +37,7 @@ def fidelity(fss = None, constants_pass = None):
 	names = ['linear', 'diag', 'circ']
 	HWPAngles = np.array([0, np.pi/8, None])
 	QWPAngles = np.array([None, None, np.pi/4])
-	angles = np.vstack((HWPAngles, QWPAngles)).T
-	
+	angles = np.vstack((HWPAngles, QWPAngles)).T	
 	
 	hold_degrees_of_corrolation = []
 
@@ -67,7 +66,8 @@ def fidelity(fss = None, constants_pass = None):
 	dirname = 'fss-' + repr(f) + ' xtau-' + repr(constants.xtau)	
 	for name in names:	
 		plt = save.plotdata(name = name, dir = dirname)
-		# plt.show()
+		if __name__ == "__main__":
+			plt.show()
 		save.savefig(plt, name = name, dir = dirname)
 
 	return fidelity
