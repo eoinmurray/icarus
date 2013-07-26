@@ -18,6 +18,10 @@ from utils.density_matrix_sim_deps import *
 def density_matrix_sim():
 	"""
 		Calculates the biphoton density matrix.
+
+		- First runs the polarisation resolved cross corrolation measurements defined 
+			by the density_matrix_sim_deps measurements array.
+
 	"""
 
 	constants = Constants()
