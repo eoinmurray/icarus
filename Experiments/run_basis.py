@@ -1,17 +1,21 @@
 
 
+
 import os,sys
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0,parentdir)
-
 import numpy as np
 from constants import Constants
 import utils.save as save
-
 import Icarus.Experiment as Experiment	
 
-def run_basis(angles, constants):
 
+
+def run_basis(angles, constants):
+	"""
+		Runs crosscorrlation vs wave plartes experiment.
+	"""
+	
 	experiment = Experiment(constants)
 	
 	if len(angles) == 2:
@@ -68,7 +72,12 @@ def run_basis(angles, constants):
 	return ret
 
 
+
 def plotres(name, constants):
+	"""
+		Plots the result of the basis experiment.
+	"""
+
 	f = np.around(constants.FSS/1e-6, decimals=2)	
 	plt=save.plotdata(
 		name=name, 
@@ -76,6 +85,8 @@ def plotres(name, constants):
 	)
 
 	plt.show()
+
+
 
 if __name__ == "__main__":
 	constants = Constants()

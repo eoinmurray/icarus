@@ -1,10 +1,13 @@
 
 
+
 import os,sys
 import datetime
 import numpy as np 
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+
+
 
 today = datetime.datetime.now().strftime("%Y-%m-%d")
 directory = os.path.dirname("out/" + today + '/')
@@ -20,7 +23,12 @@ except OSError:
 	pass
 
 
+
 def savefig(plt, name = None, dir = None):
+	"""
+		Saves a plot.
+	"""
+
 	if not name:
 		raise NameError('You need to specify a filename.')
 
@@ -35,7 +43,13 @@ def savefig(plt, name = None, dir = None):
 
 	plt.savefig(filename)
 
+
+
 def savedata(x, y, name = None, dir = None):
+	"""
+		Saves data.
+	"""
+
 	if not name:
 		raise NameError('You need to specify a filename.')
 
@@ -52,7 +66,13 @@ def savedata(x, y, name = None, dir = None):
 	
 	np.savetxt(filename, data, delimiter = ',')
 
+
+
 def plotdata(name, dir):
+	"""
+		Plots saves data.
+	"""
+
 	filename = directory + '/' + dir + '/' + name
 	data =  np.loadtxt(filename + ' D1D3.txt', delimiter = ',')	
 	x = data[:,0]
@@ -102,7 +122,13 @@ def plotdata(name, dir):
 	
 	return plt
 
+
+
 def plot_matrix(matrix, title):
+	"""
+		3D bar chart of density matrix.
+	"""
+
 	
 	data = np.squeeze(np.asarray(matrix))
 	

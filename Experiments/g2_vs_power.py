@@ -1,16 +1,22 @@
 
 
+
 import os,sys
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0,parentdir)
-
 import numpy as np
 import matplotlib.pyplot as plt
 from constants import Constants
 import Icarus.Experiment as Experiment	
 import utils.save as save
 
+
+
 def go():
+	"""
+		Runs auto g2 vs power.
+	"""
+
 	algoname = 'auto'
 	constants = Constants()
 	powers = np.linspace(0.2, 40, num=40)
@@ -47,6 +53,8 @@ def go():
 	
 	save.savefig(plt, name = algoname + '-g2_v_power-secondprob' + repr(constants.secondary_emission_probability) + 'power-' + repr(experiment.laser.power))
 	plt.show()
+
+
 
 if __name__ == "__main__":
 	go()

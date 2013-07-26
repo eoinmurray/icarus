@@ -1,14 +1,22 @@
+
+
+
 import os,sys
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0,parentdir)
-
 from scipy import integrate, interpolate, optimize
 import numpy as np
 import matplotlib.pyplot as plt
 from constants import Constants
 import Icarus.Experiment as Experiment	
 
+
+
 if __name__ == "__main__":
+	"""
+		Runs power dependance.
+	"""
+
 	constants = Constants()
 
 	hold_power = np.linspace(0.2, 0.8, num=60)

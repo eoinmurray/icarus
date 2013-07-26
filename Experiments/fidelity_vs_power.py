@@ -1,5 +1,6 @@
 
 
+
 import time
 from multiprocessing import Pool
 import numpy as np
@@ -7,7 +8,12 @@ import matplotlib.pyplot as plt
 from fidelity import fidelity
 import utils.save as save
 
-def fidelity_vs_fss():
+
+
+def fidelity_vs_power():
+	"""
+		Runs the fidelity experiment versus power.	
+	"""
 
 	power = np.linspace(0.2, 4, 10)
 
@@ -21,5 +27,7 @@ def fidelity_vs_fss():
 	save.savedata(power, hold_fidelity, name='power_v_fidelity')
 	plt.show()
 
+
+
 if __name__ == "__main__":
-	fidelity_vs_fss()
+	fidelity_vs_power()

@@ -1,20 +1,25 @@
 
 
-import os,sys
-parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0,parentdir)
 
+import os,sys
+parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) ; sys.path.insert(0,parentdir)
+import functools
+import time
+from multiprocessing import Pool
 import numpy as np
 import matplotlib.pyplot as plt
 import utils.save as save
 from constants import Constants
 from run_basis import run_basis
 from utils.density_matrix_sim_deps import *
-import functools
-import time
-from multiprocessing import Pool
+
+
 
 def density_matrix_sim():
+	"""
+		Calculates the biphoton density matrix.
+	"""
+
 	constants = Constants()
 
 	names = ['linear', 'diag', 'circ']
@@ -52,6 +57,8 @@ def density_matrix_sim():
 	plt_imag.show()
 
 	print 'fidelity: ', np.real(density_matrix[0,0])+np.real(density_matrix[3,0])
+
+
 
 if __name__ == "__main__":
 	density_matrix_sim()

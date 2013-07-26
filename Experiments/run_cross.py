@@ -1,16 +1,23 @@
+
+
+
 import os,sys
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0,parentdir)
-
 from scipy import integrate, interpolate, optimize
 import numpy as np
 import matplotlib.pyplot as plt
 from constants import Constants
 import utils.save as save
-
 import Icarus.Experiment as Experiment	
 
-if __name__ == "__main__":
+
+
+def run_cross():
+	"""
+		Runs crosscorrlation experiment.
+	"""
+
 	constants = Constants()
 	print 'Autocorrelation g2 with', constants.secondary_emission_probability, ' secondary_emission_probability.'
 
@@ -29,3 +36,8 @@ if __name__ == "__main__":
 	save.savefig(plt, name = "cross-power-" + repr(experiment.laser.power))
 
 	plt.show()
+
+
+
+if __name__ == "__main__":
+	run_cross()

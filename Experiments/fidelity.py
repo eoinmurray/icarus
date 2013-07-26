@@ -1,9 +1,9 @@
 
 
+
 import os,sys
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0,parentdir)
-
 import functools
 import time
 from multiprocessing import Pool
@@ -13,11 +13,22 @@ from constants import Constants
 from run_basis import run_basis
 import utils.save as save
 
+
+
 def ideal_fidelity_lorentzian(fss, xlifetime, h):
-	"""Returns ideal fidelty, from AH thesis."""
+	"""
+		Returns ideal fidelty, from AH thesis.
+	"""
+
 	return 0.5*(1 + 1/(1 + ((fss**2)*((xlifetime*1e-9)**2))/(h**2)))
 
+
+
 def fidelity(power = None, constants_pass = None):
+	"""
+		Run three basis corrlations and calculates fidelity.
+	"""
+
 	constants = Constants()
 
 	if power:
@@ -71,6 +82,7 @@ def fidelity(power = None, constants_pass = None):
 		save.savefig(plt, name = name, dir = dirname)
 
 	return fidelity
+
 
 
 if __name__ == "__main__":	
