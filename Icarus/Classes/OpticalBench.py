@@ -31,7 +31,6 @@ class OpticalBench:
 
 	def setLabMatrix(self, element_names):
 		element_names = element_names.split(' ')
-
 		isSet = False
 		for element_name in element_names:
 			el = getattr(self, element_name)

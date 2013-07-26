@@ -8,7 +8,7 @@ from scipy import integrate, interpolate, optimize
 import numpy as np
 import matplotlib.pyplot as plt
 import constants as constants
-from Experiment import Experiment
+import Icarus.Experiment as Experiment	
 
 if __name__ == "__main__":
 			

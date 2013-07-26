@@ -133,6 +133,6 @@ def plot_matrix(matrix, title):
 	ax.w_yaxis.set_ticks([0.5, 1.5, 2.5, 3.5])
 	ax.w_xaxis.set_ticklabels(column_names)
 	ax.w_yaxis.set_ticklabels(row_names)
-	
+	ax.set_zlim([0,1])
 	plt.suptitle(title)
 	return plt

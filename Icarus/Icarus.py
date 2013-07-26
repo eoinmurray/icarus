@@ -6,6 +6,8 @@ from Classes.utils.Visualizer import Visualizer
 from Classes.utils.EventEmitter import EventEmitter
 from Classes.Spectrometer import Spectrometer
 
+import Algorithms as Algorithms
+
 class Icarus(EventEmitter):
 	def __init__(self):
 		self.QuantumDot = QuantumDot
@@ -13,3 +15,4 @@ class Icarus(EventEmitter):
 		self.OpticalBench = OpticalBench
 		self.Visualizer = Visualizer
 		self.Spectrometer = Spectrometer
+		self.Algorithms = Algorithms

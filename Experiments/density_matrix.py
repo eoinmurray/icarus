@@ -22,24 +22,36 @@ def density_matrix_sim():
 	QWPAngles = np.array([None, None, np.pi/4])
 	angles = np.vstack((HWPAngles, QWPAngles)).T	
 	
-	if __name__ == "__main__":
-		print 'Running from main, starting multiprocessing.'
-		pool = Pool(processes=4)
-		res = pool.map(functools.partial(run_basis, constants=constants), measurements)
+	pool = Pool(processes=4)
+	res = np.array(pool.map(functools.partial(run_basis, constants=constants), measurements))
 	
-	res = 0.25*np.array(res)
-	
+	print res
+
 	density_matrix = res[0]*M1 + res[1]*M2 + res[2]*M3 + res[3]*M4 + res[4]*M5 + res[5]*M6 + res[6]*M7 + res[7]*M8 + res[8]*M9 + res[9]*M10 + res[10]*M11 + res[11]*M12 + res[12]*M13 + res[13]*M14 + res[14]*M15 + res[15]*M16
+	density_matrix = np.squeeze(np.asmatrix(density_matrix))
+	
+	print 'Density Matrix'
+	print np.real(density_matrix)
+	print np.imag(density_matrix)
 
-	tol = 1e-15
-	density_matrix.real[abs(density_matrix.real) < tol] = 0.0
-	density_matrix.imag[abs(density_matrix.imag) < tol] = 0.0
-
-	plt = save.plot_matrix(
+	f = np.around(constants.FSS/1e-6, decimals=2)
+	
+	plt_real = save.plot_matrix(
 		np.real(density_matrix),
-		'$Re(\\rho)$'
+		'$Re(\\rho)$, F ' + repr(f) + '$\mu eV$'
 	)
-	plt.show()
+	save.savefig(plt_real, name='DensityMatrixReal-f-' + repr(f))
+
+	plt_imag = save.plot_matrix(
+		np.imag(density_matrix),
+		'$Im(\\rho)$, F ' + repr(f) + '$\mu eV$'
+	)
+
+	save.savefig(plt_imag, name='DensityMatrixImag-f-' + repr(f))
+	plt_real.show()
+	plt_imag.show()
+
+	print 'fidelity: ', np.real(density_matrix[0,0])+np.real(density_matrix[3,0])
 
 if __name__ == "__main__":
 	density_matrix_sim()

@@ -6,8 +6,9 @@ from scipy import integrate, interpolate, optimize
 import numpy as np
 import matplotlib.pyplot as plt
 from constants import Constants
-from Experiment import Experiment
 import utils.save as save
+
+import Icarus.Experiment as Experiment	
 
 if __name__ == "__main__":
 	constants = Constants()

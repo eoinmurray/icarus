@@ -7,7 +7,7 @@ sys.path.insert(0,parentdir)
 import numpy as np
 import matplotlib.pyplot as plt
 from constants import Constants
-from Experiments import Experiment
+import Icarus.Experiment as Experiment	
 import utils.save as save
 
 def go():
