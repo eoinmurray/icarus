@@ -7,14 +7,15 @@ sys.path.insert(0,parentdir)
 from scipy import integrate, interpolate, optimize
 import numpy as np
 import matplotlib.pyplot as plt
-import constants as constants
+from constants import Constants
 import Icarus.Experiment as Experiment	
 
 if __name__ == "__main__":
 			
 	hold_side = []
 	hold_g2   = []
-
+	
+	constants = Constants()
 	experiment = Experiment(constants, Visualizer=True)
 	def echo(object):
 		experiment.pcm.channel('D1D3').processPeaks(experiment.laser.pulse_width)
@@ -23,7 +24,7 @@ if __name__ == "__main__":
 		hold_g2.append(g2)
 		hold_side.append(side)
 
-	experiment.icarus.on('tick', echo)
+	experiment.on('tick', echo)
 	experiment.run('basis')
 
 	plt.ioff()
