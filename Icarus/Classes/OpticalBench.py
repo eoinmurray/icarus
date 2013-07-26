@@ -162,7 +162,7 @@ class OpticalBench:
 			[0, 0, 0, 0, 0, 1, 0, 1]
 		])
 
-		initializeTwoParticleJonesMatrices()
+		self.initializeTwoParticleJonesMatrices()
 
 
 
