@@ -8,11 +8,11 @@ class Constants():
 	xtau = 1
 	xxtau = 0.5
 	ptau = 2
+	dephasetau = 0.1
 	poptime_on = False
 	FSS = 0.0e-6
 	hbar = 6.58e-16
-	secondary_emission = False
-	secondary_emission_probability = 0.0
+	secondary_emission_probability = 0.2
 
 	# Laser
 	pulse_width = 25.
@@ -27,4 +27,4 @@ class Constants():
 
 	# Experiment parameters
 	num_iterations = 1
-	integration_time = 50000#0
+	integration_time = 50000

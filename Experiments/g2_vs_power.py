@@ -25,7 +25,11 @@ def go():
 	hold_g2 = np.array([])
 	bin_edges = np.array([])
 
+	print 'Running g2 vs power.'
+
 	for i in xrange(powers.size):
+		print 'Iteration: ' + repr(i+1) + ' of ' + repr(powers.size) + '.', '\r\r\r\r\r\r\r',
+
 		constants.power = powers[i]
 		
 		experiment = Experiment(constants, Visualizer=False)

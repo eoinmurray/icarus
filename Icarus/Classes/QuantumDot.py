@@ -2,6 +2,11 @@
 
 
 import numpy as np
+import errors.Errors as Errors
+
+
+
+# _function denotes a local only function, it should not be used outside this file.
 
 
 
@@ -12,7 +17,7 @@ class QuantumDot:
 	"""
 	
 
-	def __init__(self, xlifetime=None, xxlifetime=None, ptau = None, FSS=None):
+	def __init__(self, xlifetime=None, xxlifetime=None, ptau=None, FSS=None, crosstau=None):
 		"""
 			Initialize.
 		"""
@@ -21,11 +26,14 @@ class QuantumDot:
 		self.xtau = xlifetime
 		self.xxtau = xxlifetime
 		self.ptau = ptau
+		self.crosstau = crosstau
 		
 		self.FSS = FSS
 
 		self.xlifetime = 0
 		self.xxlifetime = 0
+		self.xlifetime_last = 1
+		self.xxlifetime_last = 1
 		self.temp_hold_xlifetime = 10000
 		self.phase = 0
 
@@ -55,7 +63,7 @@ class QuantumDot:
 
 	
 
-	def lifetimes(self):
+	def generate_lifetimes(self):
 		"""
 			Generates lifetimes, the biexciton lifetime is always shorter than the exciton.
 		"""
@@ -65,7 +73,9 @@ class QuantumDot:
 	
 		while xxlifetime > xlifetime:
 			xxlifetime = np.random.exponential( self.xxtau, 1)[0]
-			# xxlifetime = np.random.exponential( self.xxtau, 1)[0]
+
+		self.xlifetime_last = self.xlifetime
+		self.xxlifetime_last = self.xxlifetime
 	
 		self.xlifetime = xlifetime
 		self.xxlifetime = xxlifetime
@@ -82,13 +92,36 @@ class QuantumDot:
 
 	
 
+	def generate_state(self):
+		"""
+			Calculates a state based on the phase and polarization.
+		"""
+
+		self.generate_phase()
+		state = (1.0/np.sqrt(2.0))*( np.kron(self.ixh, self.ixxh) + self.phase*np.kron(self.ixv,self.ixxv))
+		self.state = state
+		return state
+	
+
+
 	def generate_phase(self):
 		"""
 			Calculates a phase based on the FSS.
 		"""
 
-		hbar = 6.56e-16
-		self.phase = self._generate_phase(self.FSS, self.xlifetime, hbar)
+		if self.xlifetime == self.xlifetime_last:
+			raise Errors.RepeatLifetimes('Lifetimes are being reused. Use QuantumDot.lifetimes() to generate lifetimes.')
+
+		if self.xlifetime == 0:
+			raise Errors.UnsetLifetimes('Lifetimes have not been set. Use QuantumDot.lifetimes() to generate lifetimes.')			
+
+		hbar = 6.56e-16 # eV
+		phase = self._generate_phase(self.FSS, self.xlifetime, hbar)
+		dephase = self._cross_dephasing(self.xlifetime, self.crosstau)
+		
+		if dephase != None:
+			self.phase =  dephase
+
 		return self.phase
 
 	
@@ -100,19 +133,21 @@ class QuantumDot:
 
 		return np.exp((1.0j*FSS*xlifetime*1e-9)/hbar)
 
-	
 
-	def generate_state(self):
+
+	def _cross_dephasing(self, xlifetime, crosstau):
 		"""
-			Calculates a state based on the phase and polarization.
+			Implements critical result of pure dephasing.
 		"""
 
-		self.generate_phase()
-		state = (1.0/np.sqrt(2.0))*( np.kron(self.ixh, self.ixxh) + self.phase*np.kron(self.ixv,self.ixxv))
-		self.state = state
-		return state
+		if np.random.exponential(crosstau, 1)[0] < xlifetime:
+			c = (np.random.random_sample() + np.random.random_sample()*1j)
+			cp = c/np.abs(c)
+			return cp
+		else:
+			return None
 
-	
+
 
 	def x_probability(self, power):
 		"""

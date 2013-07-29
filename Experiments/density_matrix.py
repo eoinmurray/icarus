@@ -26,14 +26,9 @@ def density_matrix_sim():
 
 	constants = Constants()
 
-	names = ['linear', 'diag', 'circ']
-	HWPAngles = np.array([0, np.pi/8, None])
-	QWPAngles = np.array([None, None, np.pi/4])
-	angles = np.vstack((HWPAngles, QWPAngles)).T	
-	
 	pool = Pool(processes=4)
 	res = np.array(pool.map(functools.partial(run_basis, constants=constants), measurements))
-	
+
 	print res
 
 	density_matrix = res[0]*M1 + res[1]*M2 + res[2]*M3 + res[3]*M4 + res[4]*M5 + res[5]*M6 + res[6]*M7 + res[7]*M8 + res[8]*M9 + res[9]*M10 + res[10]*M11 + res[11]*M12 + res[12]*M13 + res[13]*M14 + res[14]*M15 + res[15]*M16
