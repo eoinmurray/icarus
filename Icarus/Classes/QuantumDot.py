@@ -38,6 +38,7 @@ class QuantumDot:
 
 		self.initializeMatrices()
 		self.xtau = xtau
+
 		self.xxtau = xxtau
 		self.ptau = ptau
 		self.crosstau = crosstau
@@ -119,16 +120,15 @@ class QuantumDot:
 
 
 
-
-	def ideal_fidelity_lorentzian(self, fss, xtau, crosstau):
+	def ideal_fidelity_lorentzian(self):
 		"""
 			Returns ideal fidelty, from AH thesis pg 72.
 			Slightly simplified with k = ghv' = 1.
 		"""
 
-		xtau = float(xtau)*1e-9
-		fss = float(fss)
-		crosstau = float(crosstau)*1e-9
+		xtau = self.xtau*1e-9
+		fss = self.FSS
+		crosstau = self.crosstau*1e-9
 
 		hbar = 6.56e-16 # eV
 
@@ -188,8 +188,8 @@ class QuantumDot:
 		"""
 
 		self.check_lifetimes()
-		ghv = 1/(1 + self.xtau/self.crosstau)
-		
+		ghv = self.ideal_fidelity_lorentzian()[1]
+
 		if ghv > 1: 
 			raise ValueError('First order coherence is greater than one.')
 
@@ -197,7 +197,13 @@ class QuantumDot:
 			return None
 
 		elif np.random.random_sample() < ghv:
-			c = (np.random.random_sample() + np.random.random_sample()*1j)
+			pos1 = 1.
+			pos2 = 1.
+			
+			if np.random.random_sample() < 0.5: pos1 = -1.
+			if np.random.random_sample() < 0.5: pos2 = -1.
+
+			c = (pos1*np.random.random_sample() + pos2*np.random.random_sample()*1j)
 			cp = c/np.abs(c)
 
 			if np.around(np.abs(cp), decimals=4) != 1:

@@ -16,23 +16,19 @@ from Icarus.Classes.QuantumDot import QuantumDot
 
 
 
-def fidelity(power = None, constants_pass = None):
+def fidelity(FSS = None):
 	"""
 		Run three basis corrlations and calculates fidelity.
 	"""
 
 	constants = Constants()
 
-	if power:
-		constants.power = power
-	if constants_pass:
-		constants = constants_pass
+	if FSS:
+		print 'FSS passed.'
+		constants.FSS = FSS
 
-	expected_fidelity, first_order_coherence = QuantumDot().ideal_fidelity_lorentzian(
-		constants.FSS,
-		constants.xtau,
-		constants.crosstau
-		)
+	indication_qd = QuantumDot(constants.xtau, constants.xxtau, constants.ptau, constants.FSS, constants.crosstau)
+	expected_fidelity, first_order_coherence = indication_qd.ideal_fidelity_lorentzian()
 	
 	print 'Starting fidelity measurement with fss: ', constants.FSS/1e-6, 'ueV and xlifetime of ', constants.xtau, 'ns'
 	print 'Expecting fidelity of ', np.around(expected_fidelity, decimals=2)
@@ -92,6 +88,5 @@ def fidelity(power = None, constants_pass = None):
 
 
 if __name__ == "__main__":	
-	constants = Constants()
-	fidelity(constants_pass = constants)
+	fidelity(1)
 
