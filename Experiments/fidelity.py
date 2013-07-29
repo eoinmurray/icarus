@@ -82,6 +82,7 @@ def fidelity(FSS = None):
 		if __name__ == "__main__":
 			plt.show()
 		save.savefig(plt, name = name, dir = dirname)
+		plt.close('all')
 
 	return fidelity
 

@@ -15,8 +15,7 @@ def fidelity_vs_fss():
 		Runs the fidelity experiment versus FSS.	
 	"""
 
-	size = 70
-	fss = np.concatenate( (np.linspace( -10, 0, num=size), np.linspace( 0, 10, num=size)), axis=0)
+	fss = np.linspace( -10, 10, 150)
 	fss = fss*1e-6
 
 	pool = Pool(processes=4)  

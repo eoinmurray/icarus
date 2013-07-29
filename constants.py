@@ -16,7 +16,7 @@ class Constants():
 
 	# Laser
 	pulse_width = 25.
-	power = 0.4
+	power = 0.8
 
 	# Detector
 	FWHM = 4.8
@@ -27,4 +27,4 @@ class Constants():
 
 	# Experiment parameters
 	num_iterations = 1
-	integration_time = 100000
+	integration_time = 200000

@@ -120,14 +120,15 @@ class QuantumDot:
 
 
 
-	def ideal_fidelity_lorentzian(self):
+	def ideal_fidelity_lorentzian(self, fss = None):
 		"""
 			Returns ideal fidelty, from AH thesis pg 72.
 			Slightly simplified with k = ghv' = 1.
 		"""
 
 		xtau = self.xtau*1e-9
-		fss = self.FSS
+		if fss == None:
+			fss = self.FSS
 		crosstau = self.crosstau*1e-9
 
 		hbar = 6.56e-16 # eV
