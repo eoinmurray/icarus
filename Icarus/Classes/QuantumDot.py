@@ -196,7 +196,7 @@ class QuantumDot:
 		if float(self.crosstau) == 0.0: 
 			return None
 
-		elif np.random.random_sample() < ghv:
+		elif np.random.random_sample() < (1. - ghv):
 			pos1 = 1.
 			pos2 = 1.
 			

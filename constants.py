@@ -8,9 +8,9 @@ class Constants():
 	xtau = 1.
 	xxtau = 0.5
 	ptau = 2.
-	crosstau = 1e20
+	crosstau = 2.5
 	poptime_on = False
-	FSS = 10.0e-6
+	FSS = 0.0e-6
 	hbar = 6.58e-16
 	secondary_emission_probability = 0.
 
@@ -27,4 +27,4 @@ class Constants():
 
 	# Experiment parameters
 	num_iterations = 1
-	integration_time = 50000
+	integration_time = 100000

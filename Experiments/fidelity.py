@@ -88,5 +88,5 @@ def fidelity(FSS = None):
 
 
 if __name__ == "__main__":	
-	fidelity(1)
+	fidelity()
 
