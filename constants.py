@@ -8,7 +8,7 @@ class Constants():
 	xtau = 1
 	xxtau = 0.5
 	ptau = 2
-	dephasetau = 0.1
+	crosstau = 2.5
 	poptime_on = False
 	FSS = 0.0e-6
 	hbar = 6.58e-16

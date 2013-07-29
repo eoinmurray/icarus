@@ -28,7 +28,8 @@ class Experiment(EventEmitter):
 			xlifetime  = self.constants.xtau, 
 			xxlifetime = self.constants.xxtau, 
 			ptau = self.constants.ptau, 
-			FSS = self.constants.FSS
+			FSS = self.constants.FSS,
+			crosstau = self.constants.crosstau
 		)
 
 		self.spectrometer = icarus.Spectrometer()
