@@ -25,8 +25,8 @@ class Experiment(EventEmitter):
 		self.constants = constants
 
 		self.qd = icarus.QuantumDot( 
-			xlifetime  = self.constants.xtau, 
-			xxlifetime = self.constants.xxtau, 
+			xtau  = self.constants.xtau, 
+			xxtau = self.constants.xxtau, 
 			ptau = self.constants.ptau, 
 			FSS = self.constants.FSS,
 			crosstau = self.constants.crosstau

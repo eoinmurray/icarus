@@ -5,14 +5,14 @@ import numpy as np
 class Constants():
 
 	# Quantum dot
-	xtau = 1
+	xtau = 1.
 	xxtau = 0.5
-	ptau = 2
+	ptau = 2.
 	crosstau = 2.5
 	poptime_on = False
 	FSS = 0.0e-6
 	hbar = 6.58e-16
-	secondary_emission_probability = 0.2
+	secondary_emission_probability = 0.
 
 	# Laser
 	pulse_width = 25.

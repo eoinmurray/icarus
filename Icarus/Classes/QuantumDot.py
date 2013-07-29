@@ -31,14 +31,14 @@ class QuantumDot:
 	"""
 	
 
-	def __init__(self, xlifetime=None, xxlifetime=None, ptau=None, FSS=None, crosstau=None):
+	def __init__(self, xtau=None, xxtau=None, ptau=None, FSS=None, crosstau=None):
 		"""
 			Initialize.
 		"""
 
 		self.initializeMatrices()
-		self.xtau = xlifetime
-		self.xxtau = xxlifetime
+		self.xtau = xtau
+		self.xxtau = xxtau
 		self.ptau = ptau
 		self.crosstau = crosstau
 		
@@ -104,6 +104,43 @@ class QuantumDot:
 
 		return np.random.exponential( self.ptau - self.xtau, size=1)[0]
 
+
+
+	def check_lifetimes(self):
+		"""
+			Checks if xlifetime_last is not the same as xlifetime current.
+		"""
+
+		if self.xlifetime == self.xlifetime_last:
+			raise Errors.RepeatLifetimes('Lifetimes are being reused. Use QuantumDot.lifetimes() to generate lifetimes.')
+
+		if self.xlifetime == 0:
+			raise Errors.UnsetLifetimes('Lifetimes have not been set. Use QuantumDot.lifetimes() to generate lifetimes.')			
+
+
+
+
+	def ideal_fidelity_lorentzian(self, fss, xtau, crosstau):
+		"""
+			Returns ideal fidelty, from AH thesis pg 72.
+			Slightly simplified with k = ghv' = 1.
+		"""
+
+		xtau = float(xtau)*1e-9
+		fss = float(fss)
+		crosstau = float(crosstau)*1e-9
+
+		hbar = 6.56e-16 # eV
+
+		if crosstau == 0.0: 
+			ghv = 1.0
+		else:
+			ghv = 1/(1 + xtau/crosstau)
+
+		x = ghv*fss*xtau/hbar
+
+		return 0.25 * (2 + 2*ghv / (1 + x**2)), ghv
+
 	
 
 	def generate_state(self):
@@ -123,16 +160,10 @@ class QuantumDot:
 			Calculates a phase based on the FSS.
 		"""
 
-		if self.xlifetime == self.xlifetime_last:
-			raise Errors.RepeatLifetimes('Lifetimes are being reused. Use QuantumDot.lifetimes() to generate lifetimes.')
+		self.check_lifetimes()
 
-		if self.xlifetime == 0:
-			raise Errors.UnsetLifetimes('Lifetimes have not been set. Use QuantumDot.lifetimes() to generate lifetimes.')			
-
-		hbar = 6.56e-16 # eV
-		phase = self._generate_phase(self.FSS, self.xlifetime, hbar)
-		self.phase = phase
-		dephase = self._cross_dephasing(self.xlifetime, self.crosstau)
+		self.phase = self.generate_fss_phase()
+		dephase = self.generate_cross_dephasing()
 		
 		if dephase != None:
 			self.phase =  dephase
@@ -141,21 +172,31 @@ class QuantumDot:
 
 	
 
-	def _generate_phase(self, FSS, xlifetime, hbar):
+	def generate_fss_phase(self):
 		"""
 			The actual expression for the phase, only exists as a seperate function for testing.			
 		"""
 
-		return np.exp((1.0j*FSS*xlifetime*1e-9)/hbar)
+		hbar = 6.56e-16 # eV
+		return np.exp((1.0j*self.FSS*self.xlifetime*1e-9)/hbar)
 
 
 
-	def _cross_dephasing(self, xlifetime, crosstau):
+	def generate_cross_dephasing(self):
 		"""
 			Implements critical result of pure dephasing.
 		"""
 
-		if np.random.exponential(crosstau, 1)[0] < xlifetime:
+		self.check_lifetimes()
+		ghv = 1/(1 + self.xtau/self.crosstau)
+		
+		if ghv > 1: 
+			raise ValueError('First order coherence is greater than one.')
+
+		if float(self.crosstau) == 0.0: 
+			return None
+
+		elif np.random.random_sample() < ghv:
 			c = (np.random.random_sample() + np.random.random_sample()*1j)
 			cp = c/np.abs(c)
 
@@ -163,6 +204,7 @@ class QuantumDot:
 				raise Errors.NormalizationError('New cross dephasing phase is not normalized.', np.abs(cp))
 
 			return cp
+		
 		else:
 			return None
 
