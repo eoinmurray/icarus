@@ -2,7 +2,21 @@
 
 
 import numpy as np
-import errors.Errors as Errors
+
+
+
+class RepeatLifetimes(Exception):
+    pass
+
+
+
+class UnsetLifetimes(Exception):
+	pass
+
+
+
+class NormalizationError(Exception):
+	pass
 
 
 
@@ -117,6 +131,7 @@ class QuantumDot:
 
 		hbar = 6.56e-16 # eV
 		phase = self._generate_phase(self.FSS, self.xlifetime, hbar)
+		self.phase = phase
 		dephase = self._cross_dephasing(self.xlifetime, self.crosstau)
 		
 		if dephase != None:
@@ -143,6 +158,10 @@ class QuantumDot:
 		if np.random.exponential(crosstau, 1)[0] < xlifetime:
 			c = (np.random.random_sample() + np.random.random_sample()*1j)
 			cp = c/np.abs(c)
+
+			if np.around(np.abs(cp), decimals=4) != 1:
+				raise Errors.NormalizationError('New cross dephasing phase is not normalized.', np.abs(cp))
+
 			return cp
 		else:
 			return None
