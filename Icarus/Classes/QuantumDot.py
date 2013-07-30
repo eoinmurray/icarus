@@ -168,8 +168,8 @@ class QuantumDot:
 		self.phase = self.generate_fss_phase()
 		dephase = self.generate_cross_dephasing()
 		
-		# if dephase != None:
-		# 	self.phase += dephase
+		if dephase != None:
+			self.phase = dephase
 
 		self.phase = self.phase/np.abs(self.phase)
 		return self.phase
@@ -202,10 +202,10 @@ class QuantumDot:
 
 		elif np.random.random_sample() > ghv:
 			c = np.random.choice(self.choice_array) + np.random.choice(self.choice_array) * 1j
-			cp = (c/np.abs(c))*0.01
-
-			# if np.around(np.abs(cp), decimals=2) != 1.0:
-				# raise NormalizationError('New cross dephasing phase is not normalized.', np.abs(cp))
+			cp = (c/np.abs(c))
+			
+			if np.around(np.abs(cp), decimals=2) != 1.0:
+				raise NormalizationError('New cross dephasing phase is not normalized.', np.abs(cp))
 
 			return cp
 		
