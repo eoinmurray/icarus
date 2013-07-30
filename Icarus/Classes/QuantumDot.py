@@ -52,6 +52,8 @@ class QuantumDot:
 		self.temp_hold_xlifetime = 10000
 		self.phase = 0
 
+		self.choice_array = np.linspace(-1., 1., 2000)
+
 	
 
 	def initializeMatrices(self):
@@ -166,9 +168,10 @@ class QuantumDot:
 		self.phase = self.generate_fss_phase()
 		dephase = self.generate_cross_dephasing()
 		
-		if dephase != None:
-			self.phase =  dephase
+		# if dephase != None:
+		# 	self.phase += dephase
 
+		self.phase = self.phase/np.abs(self.phase)
 		return self.phase
 
 	
@@ -191,24 +194,18 @@ class QuantumDot:
 		self.check_lifetimes()
 		ghv = self.ideal_fidelity_lorentzian()[1]
 
-		if ghv > 1: 
+		if (ghv > 1.0) or (ghv < 0.0): 
 			raise ValueError('First order coherence is greater than one.')
 
 		if float(self.crosstau) == 0.0: 
 			return None
 
-		elif np.random.random_sample() < (1. - ghv):
-			pos1 = 1.
-			pos2 = 1.
-			
-			if np.random.random_sample() < 0.5: pos1 = -1.
-			if np.random.random_sample() < 0.5: pos2 = -1.
+		elif np.random.random_sample() > ghv:
+			c = np.random.choice(self.choice_array) + np.random.choice(self.choice_array) * 1j
+			cp = (c/np.abs(c))*0.01
 
-			c = (pos1*np.random.random_sample() + pos2*np.random.random_sample()*1j)
-			cp = c/np.abs(c)
-
-			if np.around(np.abs(cp), decimals=4) != 1:
-				raise Errors.NormalizationError('New cross dephasing phase is not normalized.', np.abs(cp))
+			# if np.around(np.abs(cp), decimals=2) != 1.0:
+				# raise NormalizationError('New cross dephasing phase is not normalized.', np.abs(cp))
 
 			return cp
 		

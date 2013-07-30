@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from constants import Constants
 from run_basis import run_basis
 import utils.save as save
-from Icarus.Classes.QuantumDot import QuantumDot
+from Icarus import QuantumDot
 
 
 
