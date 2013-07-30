@@ -2,7 +2,7 @@
 
 ## Installation
 
-Icarus depends on numpy and matplotlib so be sure to have those installed. If you have these then simply clone or download the repo.
+Icarus depends on numpy and matplotlib so be sure to have those installed. If you have these then simply clone or [download](https://github.com/eoinmurray/icarus/archive/master.zip) the repo.
 
 ```sh
 	git clone http://github.com/eoinmurray/icarus.git
