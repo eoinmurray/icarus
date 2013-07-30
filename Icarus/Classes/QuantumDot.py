@@ -138,7 +138,7 @@ class QuantumDot:
 		if crosstau == 0.0: 
 			ghv = 1.0
 		else:
-			ghv = 1/(1 + xtau/crosstau)
+			ghv = 1./(1. + xtau/crosstau)
 
 		x = ghv*fss*xtau/hbar
 
@@ -158,6 +158,19 @@ class QuantumDot:
 	
 
 
+	def calculate_phase(self, t, FSS, phase = None):
+		""" 
+		    Calculated the exciton - biexciton phase
+		"""
+
+		if phase == None:
+		    phase = 0
+
+		hbar = 6.56e-16 
+		return np.exp((1.0j*(FSS*t*1e-9 + phase))/hbar)
+
+
+
 	def generate_phase(self):
 		"""
 			Calculates a phase based on the FSS.
@@ -165,16 +178,36 @@ class QuantumDot:
 
 		self.check_lifetimes()
 
-		self.phase = self.generate_fss_phase()
-		dephase = self.generate_cross_dephasing()
+		# self.phase = self.generate_fss_phase()
+		# dephase = self.generate_cross_dephasing()
 		
-		if dephase != None:
-			self.phase = dephase
+		# if dephase != None:
+		# 	self.phase = dephase
 
-		self.phase = self.phase/np.abs(self.phase)
+		# self.phase = self.phase/np.abs(self.phase)
+		# return self.phase
+		t = np.linspace(0, self.xlifetime, 100)
+		sin = []
+		phase = 0
+		dephasing_event = np.random.exponential(self.crosstau, 1)[0]    
+
+		for i in xrange(t.size):
+
+			p = self.calculate_phase(t[i], self.FSS, phase)
+			sin.append(p)
+
+			if t[i] > dephasing_event:
+
+				if dephasing_event < self.xlifetime:   
+					phase = np.random.random_sample()*1e-9
+					dephasing_event += np.random.exponential(self.crosstau, 1)[0]        
+
+		sin = np.array(sin)
+		self.phase = sin[-1]
+
 		return self.phase
-
 	
+
 
 	def generate_fss_phase(self):
 		"""

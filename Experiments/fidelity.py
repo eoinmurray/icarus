@@ -31,8 +31,8 @@ def fidelity(FSS = None):
 	expected_fidelity, first_order_coherence = indication_qd.ideal_fidelity_lorentzian()
 	
 	print 'Starting fidelity measurement with fss: ', constants.FSS/1e-6, 'ueV and xlifetime of ', constants.xtau, 'ns'
-	print 'Expecting fidelity of ', np.around(expected_fidelity, decimals=2)
-	print 'First order coherence ', np.around(first_order_coherence, decimals=2)
+	print 'Expecting fidelity of ', np.around(expected_fidelity, decimals=4)
+	print 'First order coherence ', np.around(first_order_coherence, decimals=4)
 
 	if constants.secondary_emission_probability != 0.0:
 		print 'NOTE: secondary_emission_probability is non-zero.'
