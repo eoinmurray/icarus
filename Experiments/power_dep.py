@@ -4,7 +4,6 @@
 import os,sys
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0,parentdir)
-from scipy import integrate, interpolate, optimize
 import numpy as np
 import matplotlib.pyplot as plt
 from constants import Constants
