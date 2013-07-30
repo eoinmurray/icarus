@@ -170,7 +170,7 @@ class QuantumDot:
 		return np.exp((1.0j*(FSS*t*1e-9 + phase))/hbar)
 
 
-
+		
 	def generate_phase(self):
 		"""
 			Calculates a phase based on the FSS.
@@ -178,14 +178,6 @@ class QuantumDot:
 
 		self.check_lifetimes()
 
-		# self.phase = self.generate_fss_phase()
-		# dephase = self.generate_cross_dephasing()
-		
-		# if dephase != None:
-		# 	self.phase = dephase
-
-		# self.phase = self.phase/np.abs(self.phase)
-		# return self.phase
 		t = np.linspace(0, self.xlifetime, 100)
 		sin = []
 		phase = 0
@@ -206,48 +198,7 @@ class QuantumDot:
 		self.phase = sin[-1]
 
 		return self.phase
-	
 
-
-	def generate_fss_phase(self):
-		"""
-			The actual expression for the phase, only exists as a seperate function for testing.			
-		"""
-
-		hbar = 6.56e-16 # eV
-		return np.exp((1.0j*self.FSS*self.xlifetime*1e-9)/hbar)
-
-
-
-	def generate_cross_dephasing(self):
-		"""
-			Implements critical result of pure dephasing.
-		"""
-
-		self.check_lifetimes()
-		ghv = self.ghv
-
-		if (ghv > 1.0) or (ghv < 0.0): 
-			raise ValueError('First order coherence is greater than one.')
-
-		return_val = 0.0
-
-		if float(self.crosstau) == 0.0: 
-			return_val = None
-
-		elif np.random.random_sample() > ghv:
-			c = np.random.choice(self.choice_array) + np.random.choice(self.choice_array) * 1j
-			cp = (c/np.abs(c))
-			
-			if np.around(np.abs(cp), decimals=2) != 1.0:
-				raise NormalizationError('New cross dephasing phase is not normalized.', np.abs(cp))
-
-			return_val = cp
-		
-		else:
-			return_val = None
-
-		return return_val
 
 
 	def x_probability(self, power):
