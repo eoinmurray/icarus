@@ -53,7 +53,7 @@ class QuantumDot:
 		self.phase = 0
 
 		self.choice_array = np.linspace(-1., 1., 2000)
-
+		self.ghv = self.ideal_fidelity_lorentzian()[1]
 	
 
 	def initializeMatrices(self):
@@ -152,9 +152,9 @@ class QuantumDot:
 		"""
 
 		self.generate_phase()
-		state = (1.0/np.sqrt(2.0))*( np.kron(self.ixh, self.ixxh) + self.phase*np.kron(self.ixv,self.ixxv))
-		self.state = state
-		return state
+		self.state = (1.0/np.sqrt(2.0))*( np.kron(self.ixh, self.ixxh) + self.phase*np.kron(self.ixv,self.ixxv))
+		
+		return self.state
 	
 
 
@@ -192,13 +192,15 @@ class QuantumDot:
 		"""
 
 		self.check_lifetimes()
-		ghv = self.ideal_fidelity_lorentzian()[1]
+		ghv = self.ghv
 
 		if (ghv > 1.0) or (ghv < 0.0): 
 			raise ValueError('First order coherence is greater than one.')
 
+		return_val = 0.0
+
 		if float(self.crosstau) == 0.0: 
-			return None
+			return_val = None
 
 		elif np.random.random_sample() > ghv:
 			c = np.random.choice(self.choice_array) + np.random.choice(self.choice_array) * 1j
@@ -207,11 +209,12 @@ class QuantumDot:
 			if np.around(np.abs(cp), decimals=2) != 1.0:
 				raise NormalizationError('New cross dephasing phase is not normalized.', np.abs(cp))
 
-			return cp
+			return_val = cp
 		
 		else:
-			return None
+			return_val = None
 
+		return return_val
 
 
 	def x_probability(self, power):

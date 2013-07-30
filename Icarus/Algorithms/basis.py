@@ -67,19 +67,21 @@ def basis(qd, pcm, laser, bench, spectrometer, constants):
 
 			xtrue = np.random.random_sample() < constants.secondary_emission_probability*qd.x_probability(laser.power)
 
-			state = qd.generate_state()
-			propogated_state = bench.matrix*state
-
-			D1D3_prob = pcm.channel('D1D3').calculate_probability(propogated_state)
-			D1D4_prob = pcm.channel('D1D4').calculate_probability(propogated_state)
-			D2D3_prob = pcm.channel('D2D3').calculate_probability(propogated_state)
-			D2D4_prob = pcm.channel('D2D4').calculate_probability(propogated_state)
-
-			prob = np.array([D1D3_prob, D1D4_prob, D2D3_prob, D2D4_prob])
-			boole = (prob.cumsum() > np.random.random_sample() )
-			first_match = np.where(boole ==True)[0][0] 				
 			
 			if xtrue:
+	
+				state = qd.generate_state()
+				propogated_state = bench.matrix*state
+
+				D1D3_prob = pcm.channel('D1D3').calculate_probability(propogated_state)
+				D1D4_prob = pcm.channel('D1D4').calculate_probability(propogated_state)
+				D2D3_prob = pcm.channel('D2D3').calculate_probability(propogated_state)
+				D2D4_prob = pcm.channel('D2D4').calculate_probability(propogated_state)
+
+				prob = np.array([D1D3_prob, D1D4_prob, D2D3_prob, D2D4_prob])
+				boole = (prob.cumsum() > np.random.random_sample() )
+				first_match = np.where(boole ==True)[0][0] 				
+
 				if first_match == 0:
 					pcm.detector('D1').hit(time, xlifetime + poptime)
 
