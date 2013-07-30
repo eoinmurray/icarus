@@ -16,7 +16,7 @@ class Constants():
 	ptau = 2.
 	crosstau = 1.
 	poptime_on = False
-	FSS = 1.e-6
+	FSS = 2.e-6
 	hbar = 6.58e-16
 	secondary_emission_probability = 0.
 

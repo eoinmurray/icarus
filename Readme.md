@@ -1,7 +1,17 @@
 # Icarus documentation.
 
-EM.
+## Constants
+	
+Class that holds the quantum dot and experiment parameters.
 
-```python
-	var x = 3;
-```
+	```python
+		from constants import Constants
+		constants = Constants()
+	```
+
+## Icarus.QuantumDot
+
+	```python
+		from Icarus import QuantumDot
+		qd = QuantumDot(constants.xtau, constants.xxtau, constants.ptau, constants.FSS, constants.crosstau)
+	```
