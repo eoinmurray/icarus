@@ -9,28 +9,28 @@ Class that holds the quantum dot and experiment parameters.
 	constants = Constants()
 ```
 
-## Icarus.QuantumDot
+## QuantumDot
 
 ```python
 	from Icarus import QuantumDot
 	qd = QuantumDot(constants.xtau, constants.xxtau, constants.ptau, constants.FSS, constants.crosstau)
 ```
 
-## Icarus.Detector
+## Detector
 
 ```python
 	from Icarus import Detector
 	detector = Detector(delay, efficiency, sigma, matrix)
 ```
 
-## Icarus.Channel
+## Channel
 
 ```python
 	from Icarus import Channel
 	channel = Channel(bin_width, detector1, detector2, name)
 ```
 
-## Icarus.PhotonCountingModule
+## PhotonCountingModule
 
 ```python
 	from Icarus import PhotonCountingModule
@@ -39,21 +39,21 @@ Class that holds the quantum dot and experiment parameters.
 	pcm.register_channel(name, channel)
 ```
 
-## Icarus.Laser
+## Laser
 
 ```python
 	from Icarus import Laser
 	laser = Laser(pulse_width, power)
 ```
 
-## Icarus.OpticalBench
+## OpticalBench
 
 ```python
 	from Icarus import OpticalBench
 	opticalbench = OpticalBench()
 ```
 
-## Icarus.Spectrometer
+## Spectrometer
 
 ```python
 	from Icarus import Spectrometer
