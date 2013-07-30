@@ -1,0 +1,20 @@
+.headline{
+	margin-top: 200px;
+}
+
+.headline h1{ font-size: 40px; }
+.headline h2{ font-size: 20px; }
+
+.headline li{
+	text-align: left;
+	width: 150px;
+	margin: 10px auto;
+	font-size: 14px;
+}
+
+@media (max-width: 480px){
+	.headline{
+		margin-top: 20px;
+		margin-bottom: 40px;
+	}
+}
