@@ -14,11 +14,11 @@ class Constants():
 	xtau = 1.
 	xxtau = 0.5
 	ptau = 2.
-	crosstau = 2.5
+	crosstau = 2.5e10
 	poptime_on = False
 	FSS = 1.e-6
 	hbar = 6.58e-16
-	secondary_emission_probability = 0.
+	secondary_emission_probability = 0.18
 
 	# Laser
 	pulse_width = 25.
