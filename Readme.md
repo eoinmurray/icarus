@@ -19,7 +19,7 @@ Class that holds the quantum dot and experiment parameters.
 	constants = Constants()
 ```
 
-# PhotoLuminescence tools.
+# PhotoLuminescence tools
 
 ## QuantumDot
 
