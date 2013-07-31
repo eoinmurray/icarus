@@ -1,4 +1,4 @@
-# Icarus documentation.
+# Icarus
 
 ## Installation
 
@@ -18,6 +18,8 @@ Class that holds the quantum dot and experiment parameters.
 	from constants import Constants
 	constants = Constants()
 ```
+
+# PhotoLuminescence tools.
 
 ## QuantumDot
 
@@ -69,6 +71,20 @@ Class that holds the quantum dot and experiment parameters.
 	from Icarus import Spectrometer
 	spectrometer = Spectrometer()
 ```
+
+# Algorithms
+
+Icarus comes with three common experiments pre written, autocorrolation, cross-corrolation and polarization resolved corrolations.
+
+## Auto corrolation
+
+## Cross corrolation
+
+## Polarization dependant corrolation
+
+# Experiment Manager
+
+Icarus has an experiment manager that can be use to quickly set up one of the algorithms.
 
 # Examples
 
