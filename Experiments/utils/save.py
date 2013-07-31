@@ -68,6 +68,26 @@ def savedata(x, y, name = None, dir = None):
 
 
 
+def save_params(dir):
+	"""
+		Saves constants.py to a text file
+	"""
+
+	from constants import Constants
+	constants = Constants()
+	import inspect
+	param_string = ''.join(inspect.getsourcelines(Constants)[0])
+
+	try:
+		os.mkdir(directory + '/' + dir)
+	except OSError:
+		pass		
+
+	with open(directory + '/' + dir + "/params.txt", "w") as text_file:
+		text_file.write(param_string)
+
+
+
 def plotdata(name, dir):
 	"""
 		Plots saves data.

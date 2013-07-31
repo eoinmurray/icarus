@@ -71,18 +71,7 @@ def fidelity(FSS = None):
 	print '	circular: ', gcirc
 	print 'fidelity: ', np.around(fidelity, decimals=2)
 	print 'real/expected: ', (fidelity/expected_fidelity)*100, '%'
-
 	
-	f = np.around(constants.FSS/1e-6, decimals=2)
-	dirname = 'fss-' + repr(f) + ' xtau-' + repr(constants.xtau)	
-
-	for name in names:	
-
-		plt = save.plotdata(name = name, dir = dirname)
-		if __name__ == "__main__":
-			plt.show()
-		save.savefig(plt, name = name, dir = dirname)
-		plt.close('all')
 
 	return fidelity
 

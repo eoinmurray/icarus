@@ -2,11 +2,11 @@
 
 # Examples
 
-[Fidelity vs FSS](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/Fidelity%2520verus%2520Fine%2520structure%2520splitting.ipynb)
+ - [Fidelity vs FSS](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/Fidelity%2520verus%2520Fine%2520structure%2520splitting.ipynb)
 
-[Pure dephasing monte carlo](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/Pure%2520dephasing%2520monte%2520carlo.ipynb)
+ - [Pure dephasing monte carlo](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/Pure%2520dephasing%2520monte%2520carlo.ipynb)
 
-[Auto g2 vs FSS](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/Auto%2520g2%2520vs%2520FSS.ipynb)
+ - [Auto g2 vs FSS](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/Auto%2520g2%2520vs%2520FSS.ipynb)
 
 ## Installation
 

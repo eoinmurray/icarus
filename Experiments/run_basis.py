@@ -45,10 +45,25 @@ def run_basis(angles, constants):
 	elif QWPAngle == np.pi/4:
 		name = 'circ'
 	
+
+	f = np.around(constants.FSS/1e-6, decimals=2)
+	import string
+	import random
+	dirname =  ''.join(random.choice(string.ascii_lowercase + string.digits) for x in range(5))
+
+
+
+	save.save_params(dirname)
+
 	for key in experiment.pcm._channels:
 		x = experiment.pcm._channels[key].bin_edges
 		y = experiment.pcm._channels[key].counts
-		save.savedata(x, y, name = name + ' ' + key, dir = 'fss-' + repr(f) + ' xtau-' + repr(constants.xtau))
+		save.savedata(x, y, name = name + ' ' + key, dir = dirname)
+
+
+	plt = save.plotdata(name = name, dir = dirname)
+	save.savefig(plt, name = name, dir = dirname)
+	plt.close('all')
 
 	experiment.pcm.channel('D1D3').normalize(experiment.laser.pulse_width)
 	experiment.pcm.channel('D1D4').normalize(experiment.laser.pulse_width)
