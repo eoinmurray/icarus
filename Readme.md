@@ -10,6 +10,8 @@ Icarus depends on numpy and matplotlib so be sure to have those installed. If yo
 	python Experiments/fidelity.py
 ```
 
+# PhotoLuminescence tools
+
 ## Constants
 	
 Class that holds the quantum dot and experiment parameters.
@@ -18,8 +20,6 @@ Class that holds the quantum dot and experiment parameters.
 	from constants import Constants
 	constants = Constants()
 ```
-
-# PhotoLuminescence tools
 
 ## QuantumDot
 
