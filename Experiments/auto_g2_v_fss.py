@@ -13,6 +13,7 @@ from multiprocessing import Pool
 import matplotlib.pyplot as plt
 
 
+
 def run_basis(FSS):
 	"""
 		Runs crosscorrlation vs wave plartes experiment.
@@ -45,6 +46,8 @@ def run_basis(FSS):
 
 	return g2_cross
 
+
+
 def auto_g2_v_fss():
 	"""
 		Runs the fidelity experiment versus FSS.	
@@ -60,7 +63,9 @@ def auto_g2_v_fss():
 	save.savefig(plt, name="auto_g2_v_fss_dephase2.5e10secondaty0.18")
 	save.savedata(fss/1e-6, hold_g2, name='auto_g2_v_fidelity', dir = 'auto_g2_v_fss_dephase2.5e10secondaty0.18')
 	plt.show()
-	
+
+
+
 if __name__ == "__main__":
 	auto_g2_v_fss()	
 

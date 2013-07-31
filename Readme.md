@@ -74,13 +74,13 @@ Class that holds the quantum dot and experiment parameters.
 
 # Algorithms
 
-Icarus comes with three common experiments pre written, autocorrolation, cross-corrolation and polarization resolved corrolations.
+Icarus comes with three common experiments pre written, autocorrelation, cross-correlation and polarization resolved correlations.
 
-## Auto corrolation
+## Auto correlation
 
-## Cross corrolation
+## Cross correlation
 
-## Polarization dependant corrolation
+## Polarization dependant correlation
 
 # Experiment Manager
 
