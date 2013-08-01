@@ -11,7 +11,7 @@ import Icarus.Experiment as Experiment
 
 
 
-def run_basis(angles, constants):
+def run_basis(angles, constants, dirname):
 	"""
 		Runs crosscorrlation vs wave plartes experiment.
 	"""
@@ -47,11 +47,6 @@ def run_basis(angles, constants):
 	
 
 	f = np.around(constants.FSS/1e-6, decimals=2)
-	import string
-	import random
-	dirname =  ''.join(random.choice(string.ascii_lowercase + string.digits) for x in range(5))
-
-
 
 	save.save_params(dirname)
 

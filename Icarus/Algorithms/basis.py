@@ -11,6 +11,28 @@ def basis(qd, pcm, laser, bench, spectrometer, constants):
 	"""
 
 	for time in laser.pulseTimes(constants.integration_time):
+
+		if np.random.random_sample() < constants.background_light_rate:
+			
+			bg_emission_time = np.random.choice(np.linspace(10., laser.pulse_width), 1)
+			
+			boole = ( (np.ones(4) * 0.25 ).cumsum() > np.random.random_sample() )
+			first_match = np.where(boole == True)[0][0] 
+
+			if first_match == 0:
+				pcm.detector('D3').hit(time, bg_emission_time)
+
+			if first_match == 1:
+				pcm.detector('D4').hit(time, bg_emission_time)
+
+			if first_match == 2:
+				pcm.detector('D3').hit(time, bg_emission_time)
+
+			if first_match == 3:
+				pcm.detector('D4').hit(time, bg_emission_time)
+
+
+
 		
 		xxtrue, xtrue = qd.emission(laser.power) 
 		xlifetime, xxlifetime = qd.generate_lifetimes()

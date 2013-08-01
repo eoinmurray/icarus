@@ -45,19 +45,19 @@ def fidelity(FSS = None):
 
 	hold_degrees_of_corrolation = []
 
+	dirname =  save.random_dirname()
+	# if __name__ == "__main__":
 
-	if __name__ == "__main__":
+	# 	print 'Running from main, starting multiprocessing.'
+	# 	pool = Pool(processes=4)
+	# 	hold_degrees_of_corrolation = pool.map(functools.partial(run_basis, constants=constants, dirname = dirname), angles)
 
-		print 'Running from main, starting multiprocessing.'
-		pool = Pool(processes=4)
-		hold_degrees_of_corrolation = pool.map(functools.partial(run_basis, constants=constants), angles)
+	# else:
 
-	else:
-
-		hold_degrees_of_corrolation.append(run_basis(angles[0], constants) )
-		hold_degrees_of_corrolation.append(run_basis(angles[1], constants) )
-		hold_degrees_of_corrolation.append(run_basis(angles[2], constants) )
-		
+	hold_degrees_of_corrolation.append(run_basis(angles[0], constants, dirname) )
+	hold_degrees_of_corrolation.append(run_basis(angles[1], constants, dirname) )
+	hold_degrees_of_corrolation.append(run_basis(angles[2], constants, dirname) )
+	
 
 	grect = hold_degrees_of_corrolation[0]
 	gdiag = hold_degrees_of_corrolation[1]
@@ -71,8 +71,8 @@ def fidelity(FSS = None):
 	print '	circular: ', gcirc
 	print 'fidelity: ', np.around(fidelity, decimals=2)
 	print 'real/expected: ', (fidelity/expected_fidelity)*100, '%'
+	print 'dirname: ', dirname
 	
-
 	return fidelity
 
 

@@ -19,7 +19,7 @@ def go():
 
 	algoname = 'auto'
 	constants = Constants()
-	powers = np.linspace(0.2, 40, num=40)
+	powers = np.linspace(0.2, 2, num=10)
 	
 	hold_counts = np.array([])
 	hold_g2 = np.array([])
@@ -49,13 +49,18 @@ def go():
 			hold_g2 = np.vstack((hold_g2, g2))
 
 	powers = np.around(powers, decimals=2)
-	
+
+	dirname = save.random_dirname()
+
+	save.savedata(powers, hold_g2.T[0], 'g2_v_power', dir = dirname)
+	save.save_params(dirname)
+
 	plt.plot(powers, hold_g2, 'go')
 	plt.ylabel('$g^{(2)}(\\tau)$')
 	plt.xlabel('Mean photon number (power)')
 	plt.ylim([0,hold_g2.max() + 1])
 	
-	save.savefig(plt, name = algoname + '-g2_v_power-secondprob' + repr(constants.secondary_emission_probability) + 'power-' + repr(experiment.laser.power))
+	save.savefig(plt, name = algoname + '-g2_v_power-secondprob' + repr(constants.secondary_emission_probability) + 'power-' + repr(experiment.laser.power), dir = dirname)
 	plt.show()
 
 

@@ -6,6 +6,8 @@ import datetime
 import numpy as np 
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import string
+import random
 
 
 
@@ -42,6 +44,15 @@ def savefig(plt, name = None, dir = None):
 		filename = directory + '/' + dir + '/' + name + '.png'
 
 	plt.savefig(filename)
+
+
+
+def random_dirname():
+	"""
+		Returns a random dirname
+	"""
+
+	return ''.join(random.choice(string.ascii_lowercase + string.digits) for x in range(5))
 
 
 
