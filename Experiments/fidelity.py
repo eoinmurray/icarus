@@ -38,8 +38,9 @@ def fidelity(FSS = None):
 		print 'NOTE: secondary_emission_probability is non-zero.'
 	
 	names = ['linear', 'diag', 'circ']
-	HWPAngles = np.array([0, np.pi/8, None])
-	QWPAngles = np.array([None, None, np.pi/4])
+	
+	HWPAngles = np.array([0, np.pi/8, None]) 
+	QWPAngles = np.array([None, None, np.pi/4]) 
 	angles = np.vstack((HWPAngles, QWPAngles)).T	
 	
 

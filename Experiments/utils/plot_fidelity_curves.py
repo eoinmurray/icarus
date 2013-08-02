@@ -45,22 +45,26 @@ def calculate_g2(delay_peak, hold_int):
 
     
 
-def plot_corrs(arr11, arr12, arr21, arr22, arr31, arr32, title):
+def plot_corrs(arr11, arr12, arr21, arr22, arr31, arr32, title, do_normalize = True):
     delay = 180 - 20
     x_min = - 100
     x_max = 100
+
+    fidelity = 0.
     
-    arr11, g2_11 = normalize(arr11)
-    arr12, g2_12 = normalize(arr12)
-    arr21, g2_21 = normalize(arr21)
-    arr22, g2_22 = normalize(arr22)
-    arr31, g2_31 = normalize(arr31)
-    arr32, g2_32 = normalize(arr32)
-    
-    grect = (g2_11 - g2_12) / (g2_11 + g2_12)
-    gdiag = (g2_21 - g2_22) / (g2_21 + g2_22)
-    gcirc = (g2_31 - g2_32) / (g2_31 + g2_32)
-    fidelity = (1 + grect + gdiag - gcirc)/4
+    if do_normalize:
+
+        arr11, g2_11 = normalize(arr11)
+        arr12, g2_12 = normalize(arr12)
+        arr21, g2_21 = normalize(arr21)
+        arr22, g2_22 = normalize(arr22)
+        arr31, g2_31 = normalize(arr31)
+        arr32, g2_32 = normalize(arr32)
+        
+        grect = (g2_11 - g2_12) / (g2_11 + g2_12)
+        gdiag = (g2_21 - g2_22) / (g2_21 + g2_22)
+        gcirc = (g2_31 - g2_32) / (g2_31 + g2_32)
+        fidelity = (1 + grect + gdiag - gcirc)/4
 
     fig = plt.figure(1, (12, 5))
     fig.subplots_adjust(left=0.05, right=0.98)
@@ -87,15 +91,18 @@ def plot_corrs(arr11, arr12, arr21, arr22, arr31, arr32, title):
     plt.show()
     
     
-def plot_by_folder(name, title = ''):
+def plot_by_folder(name, title = '', do_normalize = True):
+    import datetime
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
     plot_corrs(
-        np.loadtxt('out/2013-08-01/'+name+'/linear D1D3.txt', delimiter=','),
-        np.loadtxt('out/2013-08-01/'+name+'/linear D2D3.txt', delimiter=','),
-        np.loadtxt('out/2013-08-01/'+name+'/diag D1D3.txt', delimiter=','),
-        np.loadtxt('out/2013-08-01/'+name+'/diag D2D3.txt', delimiter=','),
-        np.loadtxt('out/2013-08-01/'+name+'/circ D1D3.txt', delimiter=','),
-        np.loadtxt('out/2013-08-01/'+name+'/circ D2D3.txt', delimiter=','),
-        title
+        np.loadtxt('out/'+today+'/'+name+'/linear D1D3.txt', delimiter=','),
+        np.loadtxt('out/'+today+'/'+name+'/linear D2D3.txt', delimiter=','),
+        np.loadtxt('out/'+today+'/'+name+'/diag D1D3.txt', delimiter=','),
+        np.loadtxt('out/'+today+'/'+name+'/diag D2D3.txt', delimiter=','),
+        np.loadtxt('out/'+today+'/'+name+'/circ D1D3.txt', delimiter=','),
+        np.loadtxt('out/'+today+'/'+name+'/circ D2D3.txt', delimiter=','),
+        title,
+        do_normalize
     )
     
 if __name__ == "__main__":

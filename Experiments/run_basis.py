@@ -25,15 +25,17 @@ def run_basis(angles, constants, dirname):
 	else:
 		HWPAngle, QWPAngle, HWPAngle2, QWPAngle2 = angles
 
+	c = constants.rotation_error
+
 	if len(angles) == 4:
-		experiment.bench.setHWP(HWPAngle, HWPAngle2)
-		experiment.bench.setQWP(QWPAngle, QWPAngle2)
+		experiment.bench.setHWP(HWPAngle + c, HWPAngle2 + c)
+		experiment.bench.setQWP(QWPAngle + c, QWPAngle2 + c)
 		experiment.bench.setLabMatrix('NBSNBS QWPQWP HWPHWP SS PBSPBS')
 	elif (HWPAngle is not None):
-		experiment.bench.setHWP(HWPAngle, HWPAngle2)
+		experiment.bench.setHWP(HWPAngle + c, HWPAngle2 + c)
 		experiment.bench.setLabMatrix('NBSNBS HWPHWP SS PBSPBS')
 	elif (QWPAngle is not None):
-		experiment.bench.setQWP(QWPAngle, QWPAngle2)
+		experiment.bench.setQWP(QWPAngle + c, QWPAngle2 + c)
 		experiment.bench.setLabMatrix('NBSNBS QWPQWP SS PBSPBS')
 	
 	experiment.run('basis')
