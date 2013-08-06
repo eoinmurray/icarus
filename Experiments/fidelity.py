@@ -13,7 +13,7 @@ from constants import Constants
 from run_basis import run_basis
 import utils.save as save
 from Icarus import QuantumDot
-
+import datetime
 
 
 def fidelity(attr_val = None, attr_name = None, folder_name = ''):
@@ -76,11 +76,13 @@ def fidelity(attr_val = None, attr_name = None, folder_name = ''):
 		return fidelity
 
 
-
-if __name__ == "__main__":	
+def go():
+	today = datetime.datetime.now().strftime("%Y-%m-%d")
+	directory = os.path.dirname("out/" + today + '/')
+	
 	dirname = fidelity()[1]
 	from utils.plot_fidelity_curves import *
-	plot_by_folder(dirname)
+	plot_by_folder(directory +'/'+ dirname)
 
-
-
+if __name__ == "__main__":	
+	go()

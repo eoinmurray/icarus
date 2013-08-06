@@ -110,7 +110,6 @@ def save_params(dirname, obj = None):
 	if obj:
 
 		with open(directory + '/' + dirname + "/params.txt", "w") as text_file:
-			print type(obj)
 			for i in dir(obj):
 				if len(i.split('__')) == 1: 
 					text_file.write(i + ', ' + repr(getattr(obj, i)) + '\n')

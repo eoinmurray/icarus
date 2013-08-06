@@ -14,13 +14,13 @@ class Constants():
 	xtau = 1.
 	xxtau = 0.5
 	ptau = 2.
-	poptime_on = False
+	poptime_on = True
 	hbar = 6.58e-16
 	
 	FSS = 0.0e-6
-	crosstau = 2.5
-	secondary_emission_probability = 0.18
-	bg_emission_rate = 0.1
+	crosstau = 2.5e10
+	secondary_emission_probability = 0.
+	bg_emission_rate = 0.3
 
 	# Laser
 	pulse_width = 25.
@@ -32,7 +32,7 @@ class Constants():
 	efficiency = 1.
 	delay = 161.8
 	bin_width = 50
-	rotation_error = np.pi/26
+	rotation_error = 0.#np.pi/26
 
 	# Experiment parameters
 	num_iterations = 1
