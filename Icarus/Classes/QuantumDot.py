@@ -127,7 +127,6 @@ class QuantumDot:
 	def ideal_fidelity_lorentzian(self, fss = None):
 		"""
 			Returns ideal fidelty, from AH thesis pg 72.
-			Slightly simplified with k = ghv' = 1.
 		"""
 
 		xtau = self.xtau*1e-9
@@ -144,9 +143,9 @@ class QuantumDot:
 
 		x = ghv*fss*xtau/hbar
 
-		k = 1 - self.bg_emission_rate
+		k = 1. - self.bg_emission_rate
 
-		return 0.25 * (1 + k + 2*k*ghv / (1 + x**2)), ghv
+		return 0.25 * (1. + k + 2.*k*ghv / (1. + x**2)), ghv
 
 	
 

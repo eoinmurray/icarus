@@ -42,22 +42,18 @@ def fidelity(attr_val = None, attr_name = None, folder_name = ''):
 	QWPAngles = np.array([None, None, np.pi/4]) 
 	angles = np.vstack((HWPAngles, QWPAngles)).T	
 	
-
 	hold_degrees_of_corrolation = []
 	dirname =  save.random_dirname()
 	dirname = folder_name + '/' + dirname
 
-
 	hold_degrees_of_corrolation.append(run_basis(angles[0], constants, dirname) )
 	hold_degrees_of_corrolation.append(run_basis(angles[1], constants, dirname) )
-	hold_degrees_of_corrolation.append(run_basis(angles[2], constants, dirname) )
-	
+	hold_degrees_of_corrolation.append(run_basis(angles[2], constants, dirname) )	
 
 	grect = hold_degrees_of_corrolation[0]
 	gdiag = hold_degrees_of_corrolation[1]
 	gcirc = hold_degrees_of_corrolation[2]
 	fidelity = (1 + grect + gdiag - gcirc)/4
-
 
 	print 'Degrees of corrolation.'
 	print '	linear:   ', grect

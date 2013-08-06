@@ -17,10 +17,10 @@ class Constants():
 	poptime_on = True
 	hbar = 6.58e-16
 	
-	FSS = 0.0e-6
-	crosstau = 2.5e10
+	FSS = 1.5e-6
+	crosstau = 2.5
 	secondary_emission_probability = 0.
-	bg_emission_rate = 0.3
+	bg_emission_rate = 0.05
 
 	# Laser
 	pulse_width = 25.
@@ -36,4 +36,4 @@ class Constants():
 
 	# Experiment parameters
 	num_iterations = 1
-	integration_time = 200000
+	integration_time = 100000

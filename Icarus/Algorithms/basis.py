@@ -39,9 +39,12 @@ def basis(qd, pcm, laser, bench, spectrometer, constants):
 		xfirst_match = xxfirst_match
 
 		k = 1. - constants.bg_emission_rate
-		bg_emission_time = np.random.exponential(constants.bg_emission_rate, 1)[0]
+		g = (1. - k)/(2*k)
 
-		if np.random.random_sample() < (1.- k)/2.:
+		
+
+		if np.random.random_sample() < g:
+			bg_emission_time = np.random.exponential(constants.bg_emission_rate, 1)[0]
 			
 			boole = ( (np.ones(4) * 0.25 ).cumsum() > np.random.random_sample() )
 			rand_first_match = np.where(boole ==True)[0][0] 
@@ -53,9 +56,12 @@ def basis(qd, pcm, laser, bench, spectrometer, constants):
 				xemission_time = bg_emission_time
 				xfirst_match = rand_first_match
 
-		if np.random.random_sample() < (1.- k)/2.:
+		if np.random.random_sample() < g:
+			bg_emission_time = np.random.exponential(constants.bg_emission_rate, 1)[0]
+			
 			boole = ( (np.ones(4) * 0.25 ).cumsum() > np.random.random_sample() )
 			rand_first_match = np.where(boole ==True)[0][0] 
+			
 			xemission_time = bg_emission_time
 			xfirst_match = rand_first_match
 
