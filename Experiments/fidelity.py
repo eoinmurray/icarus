@@ -4,7 +4,7 @@
 import os,sys
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0,parentdir)
-import functools
+import functools as functools
 import time
 from multiprocessing import Pool
 import numpy as np
@@ -16,18 +16,17 @@ from Icarus import QuantumDot
 
 
 
-def fidelity(FSS = None):
+def fidelity(attr_val = None, attr_name = None, folder_name = ''):
 	"""
-		Run three basis corrlations and calculates fidelity.
+		Run three basis correlations and calculates fidelity.
 	"""
 
 	constants = Constants()
 
-	if FSS:
-		print 'FSS passed.'
-		constants.FSS = FSS
+	if attr_name:
+		setattr(constants, attr_name, attr_val)
 
-	indication_qd = QuantumDot(constants.xtau, constants.xxtau, constants.ptau, constants.FSS, constants.crosstau)
+	indication_qd = QuantumDot(constants.xtau, constants.xxtau, constants.ptau, constants.FSS, constants.crosstau, constants.bg_emission_rate)
 	expected_fidelity, first_order_coherence = indication_qd.ideal_fidelity_lorentzian()
 	
 	print 'Starting fidelity measurement with fss: ', constants.FSS/1e-6, 'ueV and xlifetime of ', constants.xtau, 'ns'
@@ -45,15 +44,9 @@ def fidelity(FSS = None):
 	
 
 	hold_degrees_of_corrolation = []
-
 	dirname =  save.random_dirname()
-	# if __name__ == "__main__":
+	dirname = folder_name + '/' + dirname
 
-	# 	print 'Running from main, starting multiprocessing.'
-	# 	pool = Pool(processes=4)
-	# 	hold_degrees_of_corrolation = pool.map(functools.partial(run_basis, constants=constants, dirname = dirname), angles)
-
-	# else:
 
 	hold_degrees_of_corrolation.append(run_basis(angles[0], constants, dirname) )
 	hold_degrees_of_corrolation.append(run_basis(angles[1], constants, dirname) )
@@ -74,10 +67,20 @@ def fidelity(FSS = None):
 	print 'real/expected: ', (fidelity/expected_fidelity)*100, '%'
 	print 'dirname: ', dirname
 	
-	return fidelity
+	if __name__ == "__main__":
+
+		return [fidelity, dirname]
+
+	else:
+
+		return fidelity
 
 
 
 if __name__ == "__main__":	
-	fidelity()
+	dirname = fidelity()[1]
+	from utils.plot_fidelity_curves import *
+	plot_by_folder(dirname)
+
+
 

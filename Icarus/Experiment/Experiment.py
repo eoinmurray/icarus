@@ -29,7 +29,8 @@ class Experiment(EventEmitter):
 			xxtau = self.constants.xxtau, 
 			ptau = self.constants.ptau, 
 			FSS = self.constants.FSS,
-			crosstau = self.constants.crosstau
+			crosstau = self.constants.crosstau,
+			bg_emission_rate = self.constants.bg_emission_rate
 		)
 
 		self.spectrometer = icarus.Spectrometer()

@@ -91,20 +91,35 @@ def plot_corrs(arr11, arr12, arr21, arr22, arr31, arr32, title, do_normalize = T
     plt.show()
     
     
-def plot_by_folder(name, title = '', do_normalize = True):
+def plot_by_folder(full_name = None, name = None, title = '', do_normalize = True):
     import datetime
     today = datetime.datetime.now().strftime("%Y-%m-%d")
-    plot_corrs(
-        np.loadtxt('out/'+today+'/'+name+'/linear D1D3.txt', delimiter=','),
-        np.loadtxt('out/'+today+'/'+name+'/linear D2D3.txt', delimiter=','),
-        np.loadtxt('out/'+today+'/'+name+'/diag D1D3.txt', delimiter=','),
-        np.loadtxt('out/'+today+'/'+name+'/diag D2D3.txt', delimiter=','),
-        np.loadtxt('out/'+today+'/'+name+'/circ D1D3.txt', delimiter=','),
-        np.loadtxt('out/'+today+'/'+name+'/circ D2D3.txt', delimiter=','),
-        title,
-        do_normalize
-    )
-    
+
+    if name:
+
+        plot_corrs(
+            np.loadtxt('out/'+today+'/'+name+'/linear D1D3.txt', delimiter=','),
+            np.loadtxt('out/'+today+'/'+name+'/linear D2D3.txt', delimiter=','),
+            np.loadtxt('out/'+today+'/'+name+'/diag D1D3.txt', delimiter=','),
+            np.loadtxt('out/'+today+'/'+name+'/diag D2D3.txt', delimiter=','),
+            np.loadtxt('out/'+today+'/'+name+'/circ D1D3.txt', delimiter=','),
+            np.loadtxt('out/'+today+'/'+name+'/circ D2D3.txt', delimiter=','),
+            title,
+            do_normalize
+        )
+        
+    if full_name:
+        plot_corrs(
+            np.loadtxt(full_name + '/linear D1D3.txt', delimiter=','),
+            np.loadtxt(full_name + '/linear D2D3.txt', delimiter=','),
+            np.loadtxt(full_name + '/diag D1D3.txt', delimiter=','),
+            np.loadtxt(full_name + '/diag D2D3.txt', delimiter=','),
+            np.loadtxt(full_name + '/circ D1D3.txt', delimiter=','),
+            np.loadtxt(full_name + '/circ D2D3.txt', delimiter=','),
+            title,
+            do_normalize
+        )
+
 if __name__ == "__main__":
 	import sys
 	plot_by_folder(str(sys.argv[1]))

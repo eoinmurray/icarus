@@ -50,7 +50,9 @@ def run_basis(angles, constants, dirname):
 
 	f = np.around(constants.FSS/1e-6, decimals=2)
 
-	save.save_params(dirname)
+	c = np.array(constants.crosstau).astype('|S4').tostring()
+
+	save.save_params(dirname, obj = constants)
 
 	for key in experiment.pcm._channels:
 		x = experiment.pcm._channels[key].bin_edges

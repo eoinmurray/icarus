@@ -18,6 +18,8 @@ class Detector(EventEmitter):
 			Init all the things.
 		"""
 		
+		self.recovery_time = 100.
+		self.last_time = 0.
 		self.efficiency = efficiency
 		self.sigma 		= sigma
 		self.delay 		= delay
@@ -46,9 +48,14 @@ class Detector(EventEmitter):
 			norm 	= np.random.normal(0, self.sigma, 1)[0]
 		else:
 			norm = 0
+
 		time  	= t + lifetime + self.delay + norm
-		self.time_tags  = np.append(self.time_tags,   [time])
-		self.trigger('change')
+
+		if time > self.last_time + self.recovery_time:
+
+			self.last_time = time
+			self.time_tags  = np.append(self.time_tags,   [time])
+			self.trigger('change')
 
 
 

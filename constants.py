@@ -17,10 +17,10 @@ class Constants():
 	poptime_on = False
 	hbar = 6.58e-16
 	
-	FSS = 0.e-6
+	FSS = 0.0e-6
 	crosstau = 2.5
-	secondary_emission_probability = 0.
-	background_light_rate = 0.2
+	secondary_emission_probability = 0.18
+	bg_emission_rate = 0.1
 
 	# Laser
 	pulse_width = 25.
@@ -29,10 +29,10 @@ class Constants():
 	# Detector
 	FWHM = 4.8
 	sigma = FWHM/(2*np.sqrt(np.log(2)*2))
-	efficiency = 0.6
+	efficiency = 1.
 	delay = 161.8
 	bin_width = 50
-	rotation_error = np.pi/20.
+	rotation_error = np.pi/26
 
 	# Experiment parameters
 	num_iterations = 1

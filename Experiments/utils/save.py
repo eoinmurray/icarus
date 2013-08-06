@@ -46,6 +46,18 @@ def savefig(plt, name = None, dir = None):
 	plt.savefig(filename)
 
 
+def ensure_exists(dirname):
+
+
+	try:
+		os.mkdir(directory + '/' + dirname)
+	except OSError:
+		import shutil
+		shutil.rmtree(directory + '/' + dirname
+			)
+		os.mkdir(directory + '/' + dirname)
+
+
 
 def random_dirname():
 	"""
@@ -79,23 +91,33 @@ def savedata(x, y, name = None, dir = None):
 
 
 
-def save_params(dir):
+def save_params(dirname, obj = None):
 	"""
 		Saves constants.py to a text file
 	"""
 
 	from constants import Constants
 	constants = Constants()
+
 	import inspect
 	param_string = ''.join(inspect.getsourcelines(Constants)[0])
 
 	try:
-		os.mkdir(directory + '/' + dir)
+		os.mkdir(directory + '/' + dirname)
 	except OSError:
 		pass		
 
-	with open(directory + '/' + dir + "/params.txt", "w") as text_file:
-		text_file.write(param_string)
+	if obj:
+
+		with open(directory + '/' + dirname + "/params.txt", "w") as text_file:
+			print type(obj)
+			for i in dir(obj):
+				if len(i.split('__')) == 1: 
+					text_file.write(i + ', ' + repr(getattr(obj, i)) + '\n')
+	else:
+
+		with open(directory + '/' + dirname + "/params.txt", "w") as text_file:
+			text_file.write(param_string)
 
 
 

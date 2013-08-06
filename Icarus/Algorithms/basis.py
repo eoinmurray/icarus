@@ -12,28 +12,8 @@ def basis(qd, pcm, laser, bench, spectrometer, constants):
 
 	for time in laser.pulseTimes(constants.integration_time):
 
-		if np.random.random_sample() < constants.background_light_rate:
-			
-			bg_emission_time = np.random.choice(np.linspace(10., laser.pulse_width), 1)
-			
-			boole = ( (np.ones(4) * 0.25 ).cumsum() > np.random.random_sample() )
-			first_match = np.where(boole == True)[0][0] 
+		# QD emission
 
-			if first_match == 0:
-				pcm.detector('D3').hit(time, bg_emission_time)
-
-			if first_match == 1:
-				pcm.detector('D4').hit(time, bg_emission_time)
-
-			if first_match == 2:
-				pcm.detector('D3').hit(time, bg_emission_time)
-
-			if first_match == 3:
-				pcm.detector('D4').hit(time, bg_emission_time)
-
-
-
-		
 		xxtrue, xtrue = qd.emission(laser.power) 
 		xlifetime, xxlifetime = qd.generate_lifetimes()
 		poptime = qd.poptime()
@@ -67,6 +47,15 @@ def basis(qd, pcm, laser, bench, spectrometer, constants):
 				pcm.detector('D4').hit(time, xxlifetime + poptime)	
 
 		if xtrue:
+			
+			if np.random.random_sample() < constants.bg_emission_rate:
+			
+				bg_emission_time = np.random.choice(np.linspace(10., laser.pulse_width), 1)
+				boole = ( (np.ones(4) * 0.25 ).cumsum() > np.random.random_sample() )
+
+			
+			first_match = np.where(boole ==True)[0][0] 
+
 			if first_match == 0:
 				pcm.detector('D1').hit(time, xlifetime + poptime)
 
@@ -80,6 +69,9 @@ def basis(qd, pcm, laser, bench, spectrometer, constants):
 				pcm.detector('D2').hit(time, xlifetime + poptime)
 
 		
+
+			# Secondary emission
+
 			time_2 = time + xlifetime + poptime
 			xlifetime, xxlifetime = qd.generate_lifetimes()
 			poptime = qd.poptime()

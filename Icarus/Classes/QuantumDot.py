@@ -31,7 +31,7 @@ class QuantumDot:
 	"""
 	
 
-	def __init__(self, xtau=None, xxtau=None, ptau=None, FSS=None, crosstau=None):
+	def __init__(self, xtau=None, xxtau=None, ptau=None, FSS=None, crosstau=None, bg_emission_rate = 0.):
 		"""
 			Initialize.
 		"""
@@ -44,6 +44,8 @@ class QuantumDot:
 		self.crosstau = crosstau
 		
 		self.FSS = FSS
+
+		self.bg_emission_rate = bg_emission_rate
 
 		self.xlifetime = 0
 		self.xxlifetime = 0
@@ -142,7 +144,9 @@ class QuantumDot:
 
 		x = ghv*fss*xtau/hbar
 
-		return 0.25 * (2 + 2*ghv / (1 + x**2)), ghv
+		k = 1 - self.bg_emission_rate
+
+		return 0.25 * (1 + k + 2*k*ghv / (1 + x**2)), ghv
 
 	
 
