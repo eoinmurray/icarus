@@ -31,6 +31,7 @@ def fidelity(attr_val = None, attr_name = None, folder_name = ''):
 	
 	print 'Starting fidelity measurement with fss: ', constants.FSS/1e-6, 'ueV and xlifetime of ', constants.xtau, 'ns'
 	print 'Expecting fidelity of ', np.around(expected_fidelity, decimals=4)
+	print 'Decoherence time ', np.around(constants.crosstau, decimals=4)
 	print 'First order coherence ', np.around(first_order_coherence, decimals=4)
 
 	if constants.secondary_emission_probability != 0.0:

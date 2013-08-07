@@ -19,18 +19,14 @@ def fidelity_vs_param():
 	"""
 
 
-	folder_name = 'fid_v_bg'
-	param_array = np.linspace( 0., 0.5, 20)
-	attr_name = 'bg_emission_rate'
+	folder_name = 'fid_v_crosstau_fss1_longint'
+	param_array = np.linspace( 0.1, 6, 40)
+	attr_name = 'crosstau'
 
 	pool = Pool(processes=4)
 
 	save.ensure_exists(folder_name)
 	hold_fidelity =	pool.map(functools.partial(fidelity, attr_name = attr_name, folder_name = folder_name), param_array)
-
-	if __name__ == "__main__":
-		plt.plot(param_array, hold_fidelity)
-		plt.show()
 
 if __name__ == "__main__":
 	fidelity_vs_param()
