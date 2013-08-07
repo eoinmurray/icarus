@@ -179,7 +179,7 @@ class QuantumDot:
 			Calculates a phase based on the FSS.
 		"""
 
-		self.check_lifetimes()
+		# self.check_lifetimes()
 
 		t = np.linspace(0, self.xlifetime, 100)
 		sin = []
