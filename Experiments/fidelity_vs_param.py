@@ -19,15 +19,15 @@ def fidelity_vs_param():
 	"""
 
 
-	folder_name = 'fid_v_fss'
-	param_array = np.linspace( 0., 2, 5)*1e-6
-	attr_name = 'FSS'
+	folder_name = 'fid_v_bg'
+	param_array = np.linspace( 0., 0.5, 20)
+	attr_name = 'bg_emission_rate'
 
-	pool = Pool(processes=4)  
+	pool = Pool(processes=4)
 
 	save.ensure_exists(folder_name)
 	hold_fidelity =	pool.map(functools.partial(fidelity, attr_name = attr_name, folder_name = folder_name), param_array)
-	
+
 	if __name__ == "__main__":
 		plt.plot(param_array, hold_fidelity)
 		plt.show()

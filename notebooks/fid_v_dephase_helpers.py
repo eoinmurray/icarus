@@ -1,6 +1,7 @@
 import os
 import sys
 import numpy as np
+import matplotlib.pyplot as plt
 
 def calculate_g2(delay_peak, hold_int):
     
@@ -69,7 +70,7 @@ def get_corr_by_folder(full_name):
         np.loadtxt(full_name + '/circ D2D3.txt', delimiter=','),
     )
 
-def get_data(rootdir):
+def get_data(rootdir, param_name):
 
     hold_outfile = []
     hold_crosstau = []
@@ -80,7 +81,7 @@ def get_data(rootdir):
     
         if os.path.exists(outfileName):
             params = np.genfromtxt(outfileName, dtype=str, delimiter=',')
-            crosstau = float(params[:,1][params[:,0]=='crosstau'][0])
+            crosstau = float(params[:,1][params[:,0]==param_name][0])
             
             hold_crosstau.append(crosstau)
             hold_outfile.append(root)
@@ -101,3 +102,24 @@ def get_data(rootdir):
     gcirc = degree_of_corrs[:,2]
     
     return [hold_crosstau, [grect, gdiag, gcirc]]
+
+
+def plot_deg_of_corr(dat):
+    
+    hold_crosstau = dat[0]
+    grect = dat[1][0]
+    gdiag = dat[1][1]
+    gcirc = dat[1][2]
+    
+    
+    plt.figure(figsize = (16/1.5, 9/1.5))
+    
+    plt.plot(hold_crosstau, grect)
+    plt.plot(hold_crosstau, gdiag)
+    plt.plot(hold_crosstau, - gcirc)
+    
+    plt.xlabel('$\\tau_{HV} (ns)$') ; plt.ylabel('Degree of corrolation')
+    
+    plt.ylim([0,1.1])
+    
+    plt.legend(['Rect', 'Diag', '- Circ'])

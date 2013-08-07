@@ -36,4 +36,4 @@ class Constants():
 
 	# Experiment parameters
 	num_iterations = 1
-	integration_time = 100000
+	integration_time = 500000
