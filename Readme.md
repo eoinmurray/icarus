@@ -2,11 +2,17 @@
 
 # Examples
 
- - [Fidelity vs FSS](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/notebooks/Fidelity%2520verus%2520Fine%2520structure%2520splitting.ipynb)
+- [Fidelity versus Finestructure splitting](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/notebooks/Fidelity%2520verus%2520Fine%2520structure%2520splitting.ipynb)
 
- - [Pure dephasing monte carlo](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/notebooks/master/Pure%2520dephasing%2520monte%2520carlo.ipynb)
+- [Fidelity curves](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/notebooks/Polarization%2520resolved%2520corrolation%2520curves.ipynb)
 
- - [Auto g2 vs FSS](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/notebooks/Auto%2520g2%2520vs%2520FSS.ipynb)
+- [Monte carlo simulation of cross dephasing events](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/notebooks/Pure%2520dephasing%2520monte%2520carlo.ipynb)
+
+- [Degree of corrolation ratios between linear and diagonal basis](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/notebooks/Degree%2520of%2520corrolation%2520ratios.ipynb)
+
+- [Degree of corrolation ratio between linear and diagonal basis versus background emission level](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/notebooks/Degree%2520of%2520corrolation%2520ratio%2520v%2520background.ipynb)
+
+- [Antibunching g2 versus fine structure splitting](http://nbviewer.ipython.org/urls/raw.github.com/eoinmurray/icarus/master/notebooks/Auto%2520g2%2520vs%2520FSS.ipynb)
 
 ## Installation
 
