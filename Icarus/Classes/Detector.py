@@ -51,11 +51,11 @@ class Detector(EventEmitter):
 
 		time  	= t + lifetime + self.delay + norm
 
-		if time > self.last_time + self.recovery_time:
+		# if time > self.last_time + self.recovery_time:
 
-			self.last_time = time
-			self.time_tags  = np.append(self.time_tags,   [time])
-			self.trigger('change')
+		self.last_time = time
+		self.time_tags  = np.append(self.time_tags,   [time])
+		self.trigger('change')
 
 
 
