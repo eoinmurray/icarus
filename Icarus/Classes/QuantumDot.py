@@ -31,7 +31,7 @@ class QuantumDot:
 	"""
 	
 
-	def __init__(self, xtau=None, xxtau=None, ptau=None, FSS=None, crosstau=None, bg_emission_rate = 0.):
+	def __init__(self, xtau=1.0, xxtau=1.0, ptau=2.0, FSS=0.0, crosstau=1e10, bg_emission_rate = 0.0):
 		"""
 			Initialize.
 		"""
