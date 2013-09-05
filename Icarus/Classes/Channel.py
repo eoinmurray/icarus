@@ -14,7 +14,7 @@ class Channel(EventEmitter):
 
 
 
-	def __init__(self, bin_width, detector1, detector2, name):
+	def __init__(self, bin_width, detector1, detector2, name, mode = 'non_HBT'):
 		"""
 			Initializes bins, time tags and calculates the channels matrix (for entangled photon
 			measurements only).
@@ -25,6 +25,10 @@ class Channel(EventEmitter):
 		self.detector2 = detector2
 		self._starts = np.array([])
 		self._stops = np.array([])
+
+		self.start = None 
+		self.stop = None 
+
 		self.matrix = np.kron(detector2.matrix, detector1.matrix)
 		self.name = name
 		
@@ -99,10 +103,18 @@ class Channel(EventEmitter):
 		"""
 		
 		def setStarts(detector):
+			if self.start is None:
+				self.start = detector.last_time
+
 			self._starts = detector.time_tags
+			self.real_time_process()
 		
 		def setStops(detector):
+			if self.stop is None:
+				self.stop = detector.last_time
+
 			self._stops = detector.time_tags
+			self.real_time_process()
 
 		self.detector1.on('change', setStarts)
 		self.detector2.on('change', setStops)
@@ -119,14 +131,29 @@ class Channel(EventEmitter):
 
 
 
+	def real_time_process(self):
+		"""
+			HBT needs to be processed in real time.
+		"""
+
+		if self.mode is 'HBT':
+			if self.start is not None and self.stop is not None:
+				temp_counts, self.bin_edges = np.histogram(self.stop - self.start, self.bins)
+				self.counts += temp_counts
+				self.start = None
+				self.stop = None
+
+
+
 	def processTimeTags(self):
 		"""
 			If both the start and stop arrays have non-zero length, then it bins the counts.
 		"""
 		
-		if (self._starts.size > 0) and (self._stops.size > 0):
-			self.counts += self.processTimeTagsAlgorithm(self.bins, self._starts, self._stops)
-			self.trigger('change')
+		if self.mode is not 'HBT':
+			if (self._starts.size > 0) and (self._stops.size > 0):
+				self.counts += self.processTimeTagsAlgorithm(self.bins, self._starts, self._stops)
+				self.trigger('change')
 
 
 
